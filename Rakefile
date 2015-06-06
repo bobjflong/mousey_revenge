@@ -17,7 +17,7 @@ Jeweler::Tasks.new do |gem|
   gem.name = "mousey_revenge"
   gem.homepage = "http://github.com/bobjflong/mousey_revenge"
   gem.license = "MIT"
-  gem.summary = "A game of mouse and cats"
+  gem.summary = "A game of mice and cats"
   gem.description = "Move blocks, trap cats, turn them into cheese!"
   gem.email = "robertjflong@gmail.com"
   gem.authors = ["Bob Long"]
