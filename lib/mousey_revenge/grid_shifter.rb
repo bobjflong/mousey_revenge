@@ -17,18 +17,11 @@ module MouseyRevenge
     # shift_left ; shift_right ; shift_up ; shift_down
     DIRECTIONS.each do |direction|
       define_method "shift_#{direction}" do |args|
-        x_off = 0
-        y_off = 0
-        x_off = -1 if direction == :left
-        x_off = +1 if direction == :right
-        y_off = +1 if direction == :up
-        y_off = -1 if direction == :down
-
         x_old = args.fetch(:x)
         y_old = args.fetch(:y)
 
-        x = x_old + x_off
-        y = y_old + y_off
+        x = x_old + MouseyRevenge::Math.x_off(direction)
+        y = y_old + MouseyRevenge::Math.y_off(direction)
 
         value = grid.get(x: x_old, y: y_old)
         grid.place(x: x, y: y, value: value)

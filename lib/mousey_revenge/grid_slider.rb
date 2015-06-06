@@ -1,5 +1,3 @@
-require 'pry'
-
 module MouseyRevenge
   # Responsible for sliding multiple values around a grid at once
   class GridSlider

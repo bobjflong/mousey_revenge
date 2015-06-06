@@ -21,21 +21,13 @@ module MouseyRevenge
 
         yield Grid::OUT_OF_BOUNDS if out_of_bounds?(x: x, y: y)
 
-        x_off = 0
-        y_off = 0
-
-        x_off = -1 if direction == :left
-        x_off = 1 if direction == :right
-        y_off = -1 if direction == :down
-        y_off = 1 if direction == :up
-
         current_value = get(x: x, y: y)
 
         Enumerator.new do |e|
           loop do
             e.yield GridEnumValue.new(x, y, current_value)
-            x += x_off
-            y += y_off
+            x += MouseyRevenge::Math.x_off(direction)
+            y += MouseyRevenge::Math.y_off(direction)
             if out_of_bounds?(x: x, y: y)
               e.yield GridEnumValue.new(x, y, Grid::OUT_OF_BOUNDS)
               break
