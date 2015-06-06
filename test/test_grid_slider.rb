@@ -34,7 +34,7 @@ class TestGridSlider < Test::Unit::TestCase
   should 'slide vertically' do
     @grid.place(x: 0, y: 1, value: @slidable)
     @grid.place(x: 0, y: 2, value: @slidable)
-    @slider.slide_up!(x: 0, y: 1)
+    @slider.slide_down!(x: 0, y: 1)
     assert_equal nil, @grid.get(x: 0, y: 1)
     assert_equal @slidable, @grid.get(x: 0, y: 2)
     assert_equal @slidable, @grid.get(x: 0, y: 3)
@@ -43,8 +43,8 @@ class TestGridSlider < Test::Unit::TestCase
   should 'invert when sliding' do
     @grid.place(x: 0, y: 1, value: @slidable)
     @grid.place(x: 0, y: 2, value: @slidable)
-    @slider.slide_up!(x: 0, y: 1)
-    @slider.slide_down!(x: 0, y: 3)
+    @slider.slide_down!(x: 0, y: 1)
+    @slider.slide_up!(x: 0, y: 3)
     assert_equal @slidable, @grid.get(x: 0, y: 1)
     assert_equal @slidable, @grid.get(x: 0, y: 2)
     assert_equal nil, @grid.get(x: 0, y: 3)
