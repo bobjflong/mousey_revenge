@@ -17,11 +17,10 @@ Jeweler::Tasks.new do |gem|
   gem.name = "mousey_revenge"
   gem.homepage = "http://github.com/bobjflong/mousey_revenge"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = "A game of mouse and cats"
+  gem.description = "Move blocks, trap cats, turn them into cheese!"
   gem.email = "robertjflong@gmail.com"
   gem.authors = ["Bob Long"]
-  # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
 
