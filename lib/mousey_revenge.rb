@@ -1,6 +1,10 @@
 module MouseyRevenge
   DIRECTIONS = [:left, :right, :up, :down]
 
+  GRID_WIDTH = 25
+  CELL_SIZE = 25
+  REAL_WIDTH = GRID_WIDTH * CELL_SIZE
+
   module Math
     class << self
       def x_off(direction)
@@ -22,3 +26,4 @@ require 'mousey_revenge/grid'
 require 'mousey_revenge/grid_shifter'
 require 'mousey_revenge/grid_slider'
 require 'mousey_revenge/grid_designer'
+require 'mousey_revenge/mouse'

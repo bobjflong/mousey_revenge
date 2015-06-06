@@ -15,4 +15,8 @@ group :development do
   gem "test-unit"
   gem "gosu"
   gem "pry"
+  gem "mocha"
+  gem "guard"
+  gem "guard-rake"
+  gem "wisper"
 end
