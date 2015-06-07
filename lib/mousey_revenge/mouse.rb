@@ -27,8 +27,9 @@ module MouseyRevenge
       direction = parse(params)
       return unless direction
       move_to_new_position(direction)
-    rescue MouseyRevenge::OccupiedError
+    rescue OccupiedError
       try_to_shift_blocks(direction)
+      move_to_new_position(direction) rescue OccupiedError
     end
 
     def sprite
