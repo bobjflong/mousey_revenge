@@ -3,7 +3,7 @@ require 'mocha/test_unit'
 
 class TestMouse < Test::Unit::TestCase
   setup do
-    @level_design = "----\n--++"
+    @level_design = "----\n--+-"
     @grid = MouseyRevenge::Grid.new(width: 5, height: 5, square_size: 1)
     MouseyRevenge::GridDesigner.new(@grid).write_to_grid(@level_design)
 
@@ -36,5 +36,12 @@ class TestMouse < Test::Unit::TestCase
     assert_equal @mouse, @grid.get(x: 1, y: 1)
     @mouse.update(up: true)
     assert_equal @mouse, @grid.get(x: 1, y: 0)
+  end
+
+  should 'shift blocks' do
+    @mouse.instance_variable_set(:@position, x: 1, y: 1)
+    @grid.overwrite(x: 1, y: 1, value: @mouse)
+    @mouse.update(right: true)
+    assert_equal true, @grid.get(x: 3, y: 1).can_slide?
   end
 end

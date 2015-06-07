@@ -1,17 +1,20 @@
 require 'helper'
 require 'ostruct'
+require 'mocha'
 
 class TestGridSlider < Test::Unit::TestCase
   setup do
     @grid = MouseyRevenge::Grid.new(width: 5, height: 5, square_size: 1)
     @slider = MouseyRevenge::GridSlider.new(grid: @grid)
-    @slidable = OpenStruct.new(can_slide?: true)
+    @slidable = mock()
+    @slidable.stubs(:can_slide?).returns(true)
   end
 
   should 'know if a line of values is slidable' do
+    @grid.place(x: 0, y: 0, value: :block)
     @grid.place(x: 1, y: 0, value: @slidable)
     @grid.place(x: 2, y: 0, value: @slidable)
-    assert_equal true, @slider.can_slide_right?(x: 1, y: 0)
+    assert_equal true, @slider.can_slide_right?(x: 0, y: 0)
   end
 
   should 'know if a line of values is not slidable' do
@@ -25,7 +28,7 @@ class TestGridSlider < Test::Unit::TestCase
   should 'slide horizontally' do
     @grid.place(x: 1, y: 0, value: @slidable)
     @grid.place(x: 2, y: 0, value: @slidable)
-    @slider.slide_right!(x: 1, y: 0)
+    @slider.slide_right!(x: 0, y: 0)
     assert_equal nil, @grid.get(x: 1, y: 0)
     assert_equal @slidable, @grid.get(x: 2, y: 0)
     assert_equal @slidable, @grid.get(x: 3, y: 0)
@@ -34,7 +37,7 @@ class TestGridSlider < Test::Unit::TestCase
   should 'slide vertically' do
     @grid.place(x: 0, y: 1, value: @slidable)
     @grid.place(x: 0, y: 2, value: @slidable)
-    @slider.slide_down!(x: 0, y: 1)
+    @slider.slide_down!(x: 0, y: 0)
     assert_equal nil, @grid.get(x: 0, y: 1)
     assert_equal @slidable, @grid.get(x: 0, y: 2)
     assert_equal @slidable, @grid.get(x: 0, y: 3)
@@ -43,8 +46,8 @@ class TestGridSlider < Test::Unit::TestCase
   should 'invert when sliding' do
     @grid.place(x: 0, y: 1, value: @slidable)
     @grid.place(x: 0, y: 2, value: @slidable)
-    @slider.slide_down!(x: 0, y: 1)
-    @slider.slide_up!(x: 0, y: 3)
+    @slider.slide_down!(x: 0, y: 0)
+    @slider.slide_up!(x: 0, y: 4)
     assert_equal @slidable, @grid.get(x: 0, y: 1)
     assert_equal @slidable, @grid.get(x: 0, y: 2)
     assert_equal nil, @grid.get(x: 0, y: 3)

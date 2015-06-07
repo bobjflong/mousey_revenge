@@ -14,7 +14,7 @@ module MouseyRevenge
         x = args.fetch(:x)
         y = args.fetch(:y)
         msg = "enumerate_#{direction}_from"
-        grid.send(msg, x: x, y: y).each do |enum_value|
+        grid.send(msg, x: x, y: y).drop(1).each do |enum_value|
           value = enum_value.value
           return false if value_is_out_of_bounds?(value)
           return true unless value
@@ -31,7 +31,7 @@ module MouseyRevenge
         storage = nil
         x = args.fetch(:x)
         y = args.fetch(:y)
-        snapshot = grid.send(msg, x: x, y: y).each.to_a
+        snapshot = grid.send(msg, x: x, y: y).drop(1).each.to_a
         snapshot.each do |enum_value|
           break if enum_value && enum_value.value == Grid::OUT_OF_BOUNDS
           old_value = enum_value && enum_value.value

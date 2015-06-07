@@ -37,7 +37,7 @@ module MouseyRevenge
 
     def new_block
       # TODO: models
-      OpenStruct.new(name: :block)
+      OpenStruct.new(name: :block, can_slide?: true)
     end
 
     def new_mouse
