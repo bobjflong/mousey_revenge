@@ -4,6 +4,8 @@ WIP clone of a classic windows game
 
 == Current status!
 
+https://raw.githubusercontent.com/bobjflong/mousey_revenge/master/wip.gif
+
 == Contributing to mousey_revenge
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
