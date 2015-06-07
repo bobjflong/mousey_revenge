@@ -1,3 +1,7 @@
+# NB: THIS CLASS IS A MESS
+# Also it's untested
+# I'm using it to scope out Gosu :)
+
 require 'gosu'
 require 'wisper'
 
