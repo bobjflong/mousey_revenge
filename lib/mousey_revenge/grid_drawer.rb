@@ -16,7 +16,7 @@ module MouseyRevenge
       @block = Gosu::Image.new(prefix + '/../../assets/tile.png', tileable: true)
       @background = Gosu::Image.new(prefix + '/../../assets/background.png', tileable: true)
 
-      @grid = Grid.new(width: 50, height: 50, square_size: 10)
+      @grid = Grid.new(width: GRID_WIDTH, height: GRID_HEIGHT, square_size: 10)
       @designer = GridDesigner.new(@grid)
       @designer.write_to_grid(GridDesigner::LEVEL_1)
 
@@ -60,7 +60,7 @@ module MouseyRevenge
     # TODO: do properly - this class should not have knowledge of sprites
     def draw_grid
       GRID_WIDTH.times do |x|
-        GRID_WIDTH.times do |y|
+        GRID_HEIGHT.times do |y|
           cell = @grid.get(x: x, y: y)
           if cell && cell.name == :block
             @block.draw(x * CELL_SIZE, y * CELL_SIZE, 0)

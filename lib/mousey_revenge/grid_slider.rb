@@ -33,7 +33,7 @@ module MouseyRevenge
         y = args.fetch(:y)
         snapshot = grid.send(msg, x: x, y: y).drop(1).each.to_a
         snapshot.each do |enum_value|
-          break if enum_value && enum_value.value == Grid::OUT_OF_BOUNDS
+          break if enum_value && value_is_out_of_bounds?(enum_value.value)
           old_value = enum_value && enum_value.value
           if storage
             grid.overwrite(x: enum_value.x, y: enum_value.y, value: storage)

@@ -1,7 +1,27 @@
 require 'ostruct'
 
 module MouseyRevenge
+  # GridDesigner's representation of a Block
+  class BlockRepresentation
+    def name
+      :block
+    end
+
+    def can_slide?
+      true
+    end
+  end
+
+  # GridDesigner's representation of a Mouse
+  class MouseRepresentation
+    def name
+      :mouse
+    end
+  end
+
   class UnknownGridItem < StandardError; end
+  # Capable of taking string representations of Levels, and writing them
+  # to grids
   class GridDesigner
     BLANK = '-'
     BLOCK = '+'
@@ -11,7 +31,7 @@ module MouseyRevenge
 
     def initialize(grid)
       @grid = grid
-      @mouse_location = [0,0]
+      @mouse_location = [0, 0]
     end
 
     def write_to_grid(level)
@@ -36,12 +56,11 @@ module MouseyRevenge
     end
 
     def new_block
-      # TODO: models
-      OpenStruct.new(name: :block, can_slide?: true)
+      BlockRepresentation.new
     end
 
     def new_mouse
-      OpenStruct.new(name: :mouse)
+      MouseRepresentation.new
     end
 
     LEVEL_1 = <<END
@@ -70,7 +89,6 @@ module MouseyRevenge
 ------------------------
 ------------------------
 ------------------------
--------------------------
 END
   end
 end
