@@ -13,9 +13,9 @@ class TestGrid < Test::Unit::TestCase
   should 'get items' do
     assert_equal nil, @grid.get(x: 0, y: 0)
     assert_equal MouseyRevenge::Grid::OUT_OF_BOUNDS, @grid.get(x: -1, y: 0)
-    assert_equal MouseyRevenge::Grid::OUT_OF_BOUNDS, @grid.get(x: 10_000, y: 0)
+    assert_equal MouseyRevenge::Grid::OUT_OF_BOUNDS, @grid.get(x: 5, y: 0)
     assert_equal MouseyRevenge::Grid::OUT_OF_BOUNDS, @grid.get(x: 0, y: -1)
-    assert_equal MouseyRevenge::Grid::OUT_OF_BOUNDS, @grid.get(x: 0, y: 10_000)
+    assert_equal MouseyRevenge::Grid::OUT_OF_BOUNDS, @grid.get(x: 0, y: 5)
   end
 
   should 'have a square size' do
