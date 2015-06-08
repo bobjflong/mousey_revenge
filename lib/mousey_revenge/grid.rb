@@ -24,6 +24,7 @@ module MouseyRevenge
     end
 
     def get(x:, y:, default: empty)
+      return OUT_OF_BOUNDS if x < 0 || y < 0
       grid_data.fetch(x) { return OUT_OF_BOUNDS }
       result = grid_data.fetch(x).fetch(y) { return OUT_OF_BOUNDS }
       result || default
@@ -40,7 +41,7 @@ module MouseyRevenge
     end
 
     def out_of_bounds?(x:, y:)
-      x < 0 || y < 0 || get(x: x, y: y) == OUT_OF_BOUNDS
+      get(x: x, y: y) == OUT_OF_BOUNDS
     end
 
     private
