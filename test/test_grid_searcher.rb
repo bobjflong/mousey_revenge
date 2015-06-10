@@ -12,13 +12,7 @@ class TestGridSearcher < Test::Unit::TestCase
   should 'work' do
     @searcher.start_at(x: 0, y: 0)
     res = @searcher.find_path_to(x: 1, y: 1)
-    chain = []
-    loop do
-      chain << [res.x, res.y]
-      break unless res.parent
-      res = res.parent
-    end
-    assert_equal [[0, 0], [0, 1], [1, 1]], chain.reverse
+    assert_equal [[0, 0], [0, 1], [1, 1]], res.retrace
   end
 
 end
