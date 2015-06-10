@@ -106,7 +106,6 @@ module MouseyRevenge
 
     def heuristic(goal, neighbour)
       (goal.x - neighbour.x).abs + (goal.y - neighbour.y).abs
-
     end
 
     def cost(current:, x:, y:)
