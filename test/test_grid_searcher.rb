@@ -2,20 +2,23 @@ require 'helper'
 
 class TestGridSearcher < Test::Unit::TestCase
   setup do
-    @level_design = "---+-\n-----"
-    @grid = MouseyRevenge::Grid.new(width: 5, height: 5, square_size: 1)
+    @level_design = "-+\n--"
+    @grid = MouseyRevenge::Grid.new(width: 2, height: 2, square_size: 1)
     @designer = MouseyRevenge::GridDesigner.new(@grid)
     @designer.write_to_grid(@level_design)
     @searcher = MouseyRevenge::GridSearcher.new(grid: @grid)
   end
 
   should 'work' do
-    @searcher.start_at(x: 2, y: 0)
-    res = @searcher.find_path_to(x: 4, y: 1)
-    assert_equal [4, 1], [res.x, res.y]
-    assert_equal [3, 1], [res.parent.x, res.parent.y]
-    assert_equal [2, 1], [res.parent.parent.x, res.parent.parent.y]
-    assert_equal [2, 0], [res.parent.parent.parent.x, res.parent.parent.parent.y]
+    @searcher.start_at(x: 0, y: 0)
+    res = @searcher.find_path_to(x: 1, y: 1)
+    chain = []
+    loop do
+      chain << [res.x, res.y]
+      break unless res.parent
+      res = res.parent
+    end
+    assert_equal [[0, 0], [0, 1], [1, 1]], chain.reverse
   end
 
 end
