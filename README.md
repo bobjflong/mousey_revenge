@@ -1,5 +1,8 @@
 # mousey_revenge
 
+[![Build Status](https://semaphoreci.com/api/v1/projects/7e40e292-635c-4b24-a500-50828c931f07/446986/badge.svg)](https://semaphoreci.com/robertjflong/mousey_revenge)
+
+
 WIP clone of a classic windows game
 
 ## Current status!
