@@ -83,6 +83,7 @@ GEM
       multi_xml (~> 0.5)
       rack (~> 1.2)
     power_assert (0.2.2)
+    pqueue (2.1.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -127,6 +128,7 @@ DEPENDENCIES
   guard-rake
   jeweler (~> 2.0.1)
   mocha
+  pqueue
   pry
   rdoc (~> 3.12)
   shoulda

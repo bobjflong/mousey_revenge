@@ -19,4 +19,5 @@ group :development do
   gem "guard"
   gem "guard-rake"
   gem "wisper"
+  gem "pqueue"
 end
