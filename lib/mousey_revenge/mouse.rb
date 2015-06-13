@@ -1,5 +1,6 @@
 require 'gosu'
-require 'pry'
+require 'mousey_revenge/drawable'
+
 module MouseyRevenge
   # Resposible for handling the movement of a Mousey
   class Mouse
@@ -7,6 +8,8 @@ module MouseyRevenge
     SPRITE_PATH = '/../../assets/mouse.png'
 
     attr_reader :grid, :position
+
+    include Drawable
 
     def initialize(game:, grid:, position:)
       @grid = grid
@@ -18,10 +21,6 @@ module MouseyRevenge
       NAME
     end
 
-    def draw
-      sprite.draw(position_x * CELL_SIZE, position_y * CELL_SIZE, 0)
-    end
-
     # TODO: refactor this big method
     def update(params)
       direction = parse(params)
@@ -30,10 +29,6 @@ module MouseyRevenge
     rescue OccupiedError
       try_to_shift_blocks(direction)
       move_to_new_position(direction) rescue OccupiedError
-    end
-
-    def sprite
-      @sprite ||= Gosu::Image.new(prefix + SPRITE_PATH, tileable: true)
     end
 
     private

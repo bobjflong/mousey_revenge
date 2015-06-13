@@ -34,11 +34,12 @@ module MouseyRevenge
     MOUSE = 'm'
     CAT = 'c'
 
-    attr_reader :grid, :mouse_location
+    attr_reader :grid, :mouse_location, :cat_locations
 
     def initialize(grid)
       @grid = grid
       @mouse_location = [0, 0]
+      @cat_locations = []
     end
 
     def write_to_grid(level)
@@ -60,6 +61,7 @@ module MouseyRevenge
         return new_mouse
       end
       if chr == CAT
+        @cat_locations << { x: x, y: y }
         return new_cat
       end
       fail UnknownGridItem

@@ -4,8 +4,10 @@ module MouseyRevenge
   class Cat
     MAX_SLEEP = 5
     NAME = :cat
+    SPRITE_PATH = '/../../assets/mouse.png'
 
     include Celluloid
+    include Drawable
 
     def initialize(grid:, position:)
       @grid = grid
@@ -23,15 +25,24 @@ module MouseyRevenge
     end
 
     def take_move(move)
-      grid_shifter.send("shift_#{move}", x: position_x, y: position_y)
+      x, y = grid_shifter.send("shift_#{move}", x: position_x, y: position_y)
+      @position = { x: x, y: y }
     end
-    
+
     def symbolic_result
       return unless @result
       return :right if @result.fetch(0) > position_x
       return :left if @result.fetch(0) < position_x
       return :down if @result.fetch(1) > position_y
       return :up if @result.fetch(1) < position_y
+    end
+
+    def sprite
+      @sprite ||= Gosu::Image.new(prefix + SPRITE_PATH, tileable: true)
+    end
+
+    def draw
+      sprite.draw(position_x * CELL_SIZE, position_y * CELL_SIZE, 0)
     end
 
     private

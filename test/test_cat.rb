@@ -27,6 +27,15 @@ class TestCat < Test::Unit::TestCase
     assert_equal :cat, @grid.get(x: 0, y: 1).name
   end
 
+  should 'update its own record of its position' do
+    @cat.calculate_move(
+      target_position: { x: 1, y: 1 },
+      should_sleep: false
+    )
+    @cat.take_move(@cat.symbolic_result)
+    assert_equal ({ x: 0, y: 1}), @cat.instance_variable_get(:@position)
+  end
+
   should 'support futures' do
     assert_equal :down, @cat.future.calculate_move(
       target_position: { x: 1, y: 1 },
