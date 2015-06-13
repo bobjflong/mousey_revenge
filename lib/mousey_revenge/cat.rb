@@ -51,10 +51,6 @@ module MouseyRevenge
       @sprite ||= Gosu::Image.new(prefix + SPRITE_PATH, tileable: true)
     end
 
-    def draw
-      sprite.draw(position_x * CELL_SIZE, position_y * CELL_SIZE, 0)
-    end
-
     private
 
     def noop
