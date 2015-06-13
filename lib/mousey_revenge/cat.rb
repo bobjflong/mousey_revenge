@@ -19,11 +19,19 @@ module MouseyRevenge
     def calculate_move(target_position:, should_sleep: true)
       find_path(target_position)
       sleep(rand(MAX_SLEEP)) if should_sleep
-      symbolic_result
+      current_actor
     end
 
     def take_move(move)
       grid_shifter.send("shift_#{move}", x: position_x, y: position_y)
+    end
+    
+    def symbolic_result
+      return unless @result
+      return :right if @result.fetch(0) > position_x
+      return :left if @result.fetch(0) < position_x
+      return :down if @result.fetch(1) > position_y
+      return :up if @result.fetch(1) < position_y
     end
 
     private
@@ -38,14 +46,6 @@ module MouseyRevenge
         y: target_position.fetch(:y)
       )
       @result = end_node.retrace.fetch(1, nil)
-    end
-
-    def symbolic_result
-      return unless @result
-      return :right if @result.fetch(0) > position_x
-      return :left if @result.fetch(0) < position_x
-      return :down if @result.fetch(1) > position_y
-      return :up if @result.fetch(1) < position_y
     end
 
     def searcher

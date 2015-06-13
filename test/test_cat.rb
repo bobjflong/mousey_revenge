@@ -10,18 +10,19 @@ class TestCat < Test::Unit::TestCase
   end
 
   should 'calculate move' do
-    assert_equal :down, @cat.calculate_move(
+    @cat.calculate_move(
       target_position: { x: 1, y: 1 },
       should_sleep: false
     )
+    assert_equal :down, @cat.symbolic_result
   end
 
   should 'synchronously take moves' do
-    move = @cat.calculate_move(
+    @cat.calculate_move(
       target_position: { x: 1, y: 1 },
       should_sleep: false
     )
-    @cat.take_move(move)
+    @cat.take_move(@cat.symbolic_result)
     assert_equal nil, @grid.get(x: 0, y: 0)
     assert_equal :cat, @grid.get(x: 0, y: 1).name
   end
@@ -30,6 +31,6 @@ class TestCat < Test::Unit::TestCase
     assert_equal :down, @cat.future.calculate_move(
       target_position: { x: 1, y: 1 },
       should_sleep: false
-    ).value
+    ).value.symbolic_result
   end
 end
