@@ -7,7 +7,9 @@ WIP clone of a classic windows game
 
 ## Current status!
 
-<img src="https://raw.githubusercontent.com/bobjflong/mousey_revenge/master/wip.gif" />
+Now with moving cats:
+
+<img src="https://raw.githubusercontent.com/bobjflong/mousey_revenge/3093d24fff05a667930ba51fa02855a3e28447ea/wip.gif" />
 
 ## Contributing to mousey_revenge
 
