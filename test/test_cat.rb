@@ -37,7 +37,7 @@ class TestCat < Test::Unit::TestCase
       should_sleep: false
     )
     @cat.take_move(@cat.symbolic_result)
-    assert_equal ({ x: 0, y: 1}), @cat.instance_variable_get(:@position)
+    assert_equal ({ x: 0, y: 1 }), @cat.instance_variable_get(:@position)
   end
 
   should 'support futures' do
@@ -45,5 +45,9 @@ class TestCat < Test::Unit::TestCase
       target_position: { x: 1, y: 1 },
       should_sleep: false
     ).value.symbolic_result
+  end
+
+  should 'default if no move is found' do
+    assert_not_nil @cat.symbolic_result(nil)
   end
 end
