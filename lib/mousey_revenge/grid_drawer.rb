@@ -24,7 +24,11 @@ module MouseyRevenge
       @designer = GridDesigner.new(@grid)
       @designer.write_to_grid(GridDesigner::LEVEL_1)
 
+      @cats = []
+
       set_up_mouse(@designer.mouse_location)
+      set_up_cats(@designer.cat_locations)
+      broadcast(:update, mouse_location: @mouse.position)
     end
 
     def update
@@ -33,6 +37,7 @@ module MouseyRevenge
         left: Gosu.button_down?(Gosu::KbLeft),
         up: Gosu.button_down?(Gosu::KbUp),
         down: Gosu.button_down?(Gosu::KbDown),
+        mouse_location: @mouse.position
       }
       broadcast(:update, params) if params != @last_params
       @last_params = params
@@ -40,6 +45,7 @@ module MouseyRevenge
 
     def draw
       draw_grid
+      draw_npcs
     end
 
     private
@@ -57,8 +63,23 @@ module MouseyRevenge
       )
     end
 
+    def set_up_cats(positions)
+      @cat_group = CatGroup.new(grid: @grid, positions: positions, game: self)
+      @cat_group.cats.each do |cat|
+        @grid.overwrite(
+          x: cat.position_x,
+          y: cat.position_y,
+          value: cat
+        )
+      end
+    end
+
     def prefix
       File.dirname(__FILE__)
+    end
+
+    def draw_npcs
+      @cat_group.draw
     end
 
     # TODO: do properly - this class should not have knowledge of sprites

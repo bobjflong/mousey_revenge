@@ -34,7 +34,9 @@ module MouseyRevenge
     private
 
     def parse(params)
-      %i(right left up down).each { |dir| return dir if params.fetch(dir, false) }
+      %i(right left up down).each do |dir|
+        return dir if params.fetch(dir, false)
+      end
       nil
     end
 
@@ -65,14 +67,6 @@ module MouseyRevenge
 
     def prefix
       File.dirname(__FILE__)
-    end
-
-    def position_x
-      position.fetch(:x)
-    end
-
-    def position_y
-      position.fetch(:y)
     end
 
     def grid_shifter

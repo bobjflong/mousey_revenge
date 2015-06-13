@@ -2,16 +2,17 @@ require 'celluloid/autostart'
 
 module MouseyRevenge
   class Cat
-    MAX_SLEEP = 5
     NAME = :cat
-    SPRITE_PATH = '/../../assets/mouse.png'
+    SPRITE_PATH = '/../../assets/cat.png'
 
     include Celluloid
     include Drawable
+    include UUID
 
     def initialize(grid:, position:)
       @grid = grid
       @position = position
+      calculate_uuid
     end
 
     def name
@@ -19,22 +20,31 @@ module MouseyRevenge
     end
 
     def calculate_move(target_position:, should_sleep: true)
+      @result = nil
       find_path(target_position)
-      sleep(rand(MAX_SLEEP)) if should_sleep
+      sleep(1) if should_sleep
       current_actor
     end
 
     def take_move(move)
-      x, y = grid_shifter.send("shift_#{move}", x: position_x, y: position_y)
-      @position = { x: x, y: y }
+      begin
+        x, y = grid_shifter.send(
+          "shift_#{move}",
+          x: position_x,
+          y: position_y
+        )
+        @position = { x: x, y: y }
+      rescue MouseyRevenge::OccupiedError
+        noop
+      end
     end
 
-    def symbolic_result
-      return unless @result
-      return :right if @result.fetch(0) > position_x
-      return :left if @result.fetch(0) < position_x
-      return :down if @result.fetch(1) > position_y
-      return :up if @result.fetch(1) < position_y
+    def symbolic_result(result = @result)
+      result ||= random_valid_move
+      return :right if result.fetch(0) > position_x
+      return :left if result.fetch(0) < position_x
+      return :down if result.fetch(1) > position_y
+      return :up if result.fetch(1) < position_y
     end
 
     def sprite
@@ -47,6 +57,18 @@ module MouseyRevenge
 
     private
 
+    def noop
+    end
+
+    def random_valid_move
+      neighbour = Neighbourhood.for(
+        x: position_x,
+        y: position_y,
+        grid: @grid
+      ).sample
+      [neighbour.x, neighbour.y]
+    end
+
     def grid_shifter
       MouseyRevenge::GridShifter.new(grid: grid)
     end
@@ -56,20 +78,13 @@ module MouseyRevenge
         x: target_position.fetch(:x),
         y: target_position.fetch(:y)
       )
+      return nil unless end_node
       @result = end_node.retrace.fetch(1, nil)
     end
 
     def searcher
       GridSearcher.new(grid: @grid)
         .start_at(x: position_x, y: position_y)
-    end
-
-    def position_x
-      position.fetch(:x)
-    end
-
-    def position_y
-      position.fetch(:y)
     end
 
     attr_reader :grid, :position

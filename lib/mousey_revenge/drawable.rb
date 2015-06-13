@@ -11,6 +11,14 @@ module MouseyRevenge
 
     def prefix
       File.dirname(__FILE__)
+    end    
+
+    def position_x
+      position.fetch(:x)
+    end
+
+    def position_y
+      position.fetch(:y)
     end
   end
 end

@@ -9,6 +9,10 @@ class TestCat < Test::Unit::TestCase
     @cat = MouseyRevenge::Cat.new(grid: @grid, position: { x: 0, y: 0 })
   end
 
+  should 'have uuids' do
+    assert_not_nil @cat.uuid
+  end
+
   should 'calculate move' do
     @cat.calculate_move(
       target_position: { x: 1, y: 1 },
