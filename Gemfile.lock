@@ -123,6 +123,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.0)
+  celluloid
   gosu
   guard
   guard-rake

@@ -20,4 +20,5 @@ group :development do
   gem "guard-rake"
   gem "wisper"
   gem "pqueue"
+  gem "celluloid"
 end

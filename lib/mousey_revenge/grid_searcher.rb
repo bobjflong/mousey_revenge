@@ -7,7 +7,7 @@ module MouseyRevenge
 
     def initialize(grid:)
       @grid = grid
-      @frontier = PQueue.new([]) { |a, b| a.priority > b.priority }
+      @frontier = PQueue.new([]) { |a, b| a.cost < b.cost }
       @came_from = {}
       @cost_so_far = {}
     end
@@ -16,15 +16,16 @@ module MouseyRevenge
       search_representation = SearchRepresentation.new(
         x: x,
         y: y,
-        priority: 0
+        cost: 0
       )
       frontier << search_representation
       came_from[[x, y]] = nil
       cost_so_far[[x, y]] = 0
+      self
     end
 
     def find_path_to(x:, y:)
-      @goal = SearchRepresentation.new(x: x, y: y, priority: 0)
+      @goal = SearchRepresentation.new(x: x, y: y, cost: 0)
       until frontier.empty?
         result = a_star_search
         return result if result
@@ -43,8 +44,8 @@ module MouseyRevenge
 
     def examine_neighbour(current, neighbour)
       new_cost = accumulated_cost(current, neighbour)
-      priority = new_cost + heuristic(@goal, neighbour)
-      search_representation = from_neighbour(neighbour, priority, current)
+      cost = new_cost + heuristic(@goal, neighbour)
+      search_representation = from_neighbour(neighbour, cost, current)
 
       return unless should_expand_frontier?(new_cost, search_representation)
       update_cost(new_cost, search_representation)
@@ -52,10 +53,10 @@ module MouseyRevenge
       maintain_visited_list(current, search_representation)
     end
 
-    def from_neighbour(neighbour, priority, parent)
+    def from_neighbour(neighbour, cost, parent)
       SearchRepresentation.from_neighbourhood_representation(
         neighbour,
-        priority,
+        cost,
         parent
       )
     end

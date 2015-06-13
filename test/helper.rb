@@ -1,4 +1,10 @@
 require 'simplecov'
+require 'celluloid'
+
+if Object.const_defined?(:Celluloid)
+  Celluloid.shutdown
+  Celluloid.boot
+end
 
 module SimpleCov::Configuration
   def clean_filters

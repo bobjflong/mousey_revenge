@@ -19,6 +19,12 @@ module MouseyRevenge
     end
   end
 
+  class CatRepresentation
+    def name
+      :cat
+    end
+  end
+
   class UnknownGridItem < StandardError; end
   # Capable of taking string representations of Levels, and writing them
   # to grids
@@ -26,6 +32,7 @@ module MouseyRevenge
     BLANK = '-'
     BLOCK = '+'
     MOUSE = 'm'
+    CAT = 'c'
 
     attr_reader :grid, :mouse_location
 
@@ -52,6 +59,9 @@ module MouseyRevenge
         @mouse_location = { x: x, y: y }
         return new_mouse
       end
+      if chr == CAT
+        return new_cat
+      end
       fail UnknownGridItem
     end
 
@@ -61,6 +71,10 @@ module MouseyRevenge
 
     def new_mouse
       MouseRepresentation.new
+    end
+
+    def new_cat
+      CatRepresentation.new
     end
 
     LEVEL_1 = <<END
