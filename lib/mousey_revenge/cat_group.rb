@@ -37,7 +37,6 @@ module MouseyRevenge
     end
 
     # Checks the list of current futures
-    # If one is resolvable, the cat is re-added to the
     def check_current_futures
       futures_currently_calculating.delete_if do |future|
         if future.ready?
