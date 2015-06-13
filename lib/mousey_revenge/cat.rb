@@ -47,10 +47,6 @@ module MouseyRevenge
       return :up if result.fetch(1) < position_y
     end
 
-    def sprite
-      @sprite ||= Gosu::Image.new(prefix + SPRITE_PATH, tileable: true)
-    end
-
     private
 
     def noop
