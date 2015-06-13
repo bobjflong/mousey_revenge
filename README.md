@@ -9,7 +9,7 @@ WIP clone of a classic windows game
 
 Now with moving cats:
 
-<img src="https://raw.githubusercontent.com/bobjflong/mousey_revenge/3093d24fff05a667930ba51fa02855a3e28447ea/wip.gif" />
+<img src="https://raw.githubusercontent.com/bobjflong/mousey_revenge/a2d75826f103dda7ea3ee907f6186a19f79256e5/wip.gif" />
 
 ## Contributing to mousey_revenge
 
