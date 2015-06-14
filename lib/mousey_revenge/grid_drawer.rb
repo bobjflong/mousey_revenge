@@ -16,7 +16,7 @@ module MouseyRevenge
     attr_reader :grid, :designer
 
     def initialize
-      super(REAL_WIDTH, REAL_WIDTH, update_interval: 50)
+      super(REAL_WIDTH, REAL_WIDTH)
       @block = Gosu::Image.new(prefix + '/../../assets/tile.png', tileable: true)
       @background = Gosu::Image.new(prefix + '/../../assets/background.png', tileable: true)
 
