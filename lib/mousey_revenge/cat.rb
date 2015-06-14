@@ -21,12 +21,14 @@ module MouseyRevenge
 
     def calculate_move(target_position:, should_sleep: true)
       @result = nil
-      find_path(target_position)
-      sleep(1) if should_sleep
-      current_actor
+      find_new_path(
+        target_position: target_position,
+        should_sleep: should_sleep
+      )
     end
 
     def take_move(move)
+      return noop unless move
       begin
         x, y = grid_shifter.send(
           "shift_#{move}",
@@ -52,6 +54,13 @@ module MouseyRevenge
     def noop
     end
 
+    def find_new_path(target_position:, should_sleep: true)
+      find_path(target_position)
+      sleep(1) if should_sleep
+      @previous_target = target_position.clone
+      current_actor
+    end
+
     def random_valid_move
       neighbour = Neighbourhood.for(
         x: position_x,
@@ -71,7 +80,9 @@ module MouseyRevenge
         y: target_position.fetch(:y)
       )
       return nil unless end_node
-      @result = end_node.retrace.fetch(1, nil)
+      @cached_trail = end_node.retrace
+      @cached_trail.shift # Delete the starting node
+      @result = @cached_trail.shift
     end
 
     def searcher
