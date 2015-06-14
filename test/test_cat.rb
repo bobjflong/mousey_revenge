@@ -50,4 +50,13 @@ class TestCat < Test::Unit::TestCase
   should 'default if no move is found' do
     assert_not_nil @cat.symbolic_result(nil)
   end
+
+  should 'not crash if there are no valid neighbours' do
+    @level_design = "c+\n+-"
+    @grid = MouseyRevenge::Grid.new(width: 2, height: 2, square_size: 1)
+    @designer = MouseyRevenge::GridDesigner.new(@grid)
+    @designer.write_to_grid(@level_design)
+    @cat = MouseyRevenge::Cat.new(grid: @grid, position: { x: 0, y: 0 })
+    assert_nil @cat.send(:random_valid_move)
+  end
 end

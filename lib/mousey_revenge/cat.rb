@@ -67,6 +67,7 @@ module MouseyRevenge
         y: position_y,
         grid: @grid
       ).sample
+      return unless neighbour
       [neighbour.x, neighbour.y]
     end
 
