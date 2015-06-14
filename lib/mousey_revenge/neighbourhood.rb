@@ -53,7 +53,9 @@ module MouseyRevenge
       def excluding_occupied_spaces(results)
         results.find_all do |n|
           contents = n.contents
-          !contents || contents.respond_to?(:name) && contents.name == :mouse
+          cat_or_mouse = contents.respond_to?(:name) &&
+            [:cat, :mouse].include?(contents.name)
+          !contents || cat_or_mouse
         end
       end
     end
