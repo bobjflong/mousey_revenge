@@ -12,6 +12,7 @@ module MouseyRevenge
     def initialize(grid:, position:)
       @grid = grid
       @position = position
+      @cache = {}
       calculate_uuid
     end
 
@@ -21,6 +22,11 @@ module MouseyRevenge
 
     def calculate_move(target_position:, should_sleep: true)
       @result = nil
+      result = find_cached_path(
+        target_position: target_position,
+        should_sleep: should_sleep
+      )
+      return result if result
       find_new_path(
         target_position: target_position,
         should_sleep: should_sleep
@@ -43,6 +49,7 @@ module MouseyRevenge
 
     def symbolic_result(result = @result)
       result ||= random_valid_move
+      return unless result
       return :right if result.fetch(0) > position_x
       return :left if result.fetch(0) < position_x
       return :down if result.fetch(1) > position_y
@@ -61,6 +68,17 @@ module MouseyRevenge
       current_actor
     end
 
+    def find_cached_path(target_position:, should_sleep:)
+      target_x = target_position.fetch(:x)
+      target_y = target_position.fetch(:y)
+      cached_trail = @cache.fetch([target_x, target_y], nil)
+      return nil unless cached_trail
+      @result = cached_trail.shift
+      @cache = { [target_x, target_y] => cached_trail }
+      sleep(1) if should_sleep
+      current_actor
+    end
+
     def random_valid_move
       neighbour = Neighbourhood.for(
         x: position_x,
@@ -76,14 +94,17 @@ module MouseyRevenge
     end
 
     def find_path(target_position)
+      target_x = target_position.fetch(:x)
+      target_y = target_position.fetch(:y)
       end_node = searcher.find_path_to(
-        x: target_position.fetch(:x),
-        y: target_position.fetch(:y)
+        x: target_x,
+        y: target_y
       )
       return nil unless end_node
-      @cached_trail = end_node.retrace
-      @cached_trail.shift # Delete the starting node
-      @result = @cached_trail.shift
+      cached_trail = end_node.retrace
+      cached_trail.shift # Delete the starting node
+      @result = cached_trail.shift
+      @cache = { [target_x, target_y] => cached_trail }
     end
 
     def searcher
