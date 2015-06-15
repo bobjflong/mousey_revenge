@@ -4,17 +4,6 @@ module MouseyRevenge
   class CatContext
     attr_reader :state
 
-    extend Forwardable
-
-    def_delegator :state, :draw
-    def_delegator :state, :sprite
-    def_delegator :state, :prefix
-    def_delegator :state, :position_x
-    def_delegator :state, :position_y
-    def_delegator :state, :name
-    def_delegator :state, :take_move
-    def_delegator :state, :symbolic_result
-
     def initialize(grid:, position:)
       @state = Cat.new(grid: grid, position: position)
     end
@@ -27,7 +16,14 @@ module MouseyRevenge
     def calculate_move(args)
       state.calculate_move(args.merge(context: self))
     end
+
+    def draw(*args)
+      state.draw(*args)
+    end
+
+    def method_missing(m, *args)
+      return state.send(m, *args) if state.respond_to?(m)
+      fail NoMethodError
+    end
   end
 end
-
-MouseyRevenge::CatContext.implements(MouseyRevenge::Contracts::CatLike)

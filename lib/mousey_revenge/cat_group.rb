@@ -54,7 +54,7 @@ module MouseyRevenge
     end
 
     def position_to_cat(position)
-      MouseyRevenge::Cat.new(
+      MouseyRevenge::CatContext.new(
         grid: grid,
         position: position
       )

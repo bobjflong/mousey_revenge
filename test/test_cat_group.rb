@@ -19,14 +19,10 @@ class TestCatGroup < Test::Unit::TestCase
     res
   end
 
-  def fake_cats
-
-  end
-
   should 'initialize a bunch of cats' do
     group = MouseyRevenge::CatGroup.new(game: @game, grid: @grid, positions: basic_positions)
     assert_equal 5, group.size
-    assert_equal [MouseyRevenge::Cat], group.map(&:class).uniq
+    assert_equal [MouseyRevenge::CatContext], group.map(&:class).uniq
   end
 
   should 'tell all of those cats to start computing a search path' do
