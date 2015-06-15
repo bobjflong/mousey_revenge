@@ -1,4 +1,5 @@
 require 'celluloid/autostart'
+require 'mousey_revenge/contracts/cat_like'
 
 module MouseyRevenge
   class Cat
@@ -20,7 +21,7 @@ module MouseyRevenge
       NAME
     end
 
-    def calculate_move(target_position:, should_sleep: true)
+    def calculate_move(target_position:, should_sleep: true, context: nil)
       @result = nil
       result = find_cached_path(
         target_position: target_position,
@@ -115,3 +116,5 @@ module MouseyRevenge
     attr_reader :grid, :position
   end
 end
+
+MouseyRevenge::Cat.implements(MouseyRevenge::Contracts::CatLike)

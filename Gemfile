@@ -21,4 +21,5 @@ group :development do
   gem "wisper"
   gem "pqueue"
   gem "celluloid"
+  gem "lawyer"
 end
