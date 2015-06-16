@@ -25,6 +25,11 @@ module MouseyRevenge
       current_actor
     end
 
+    def calculate_move_and_sleep(*)
+      sleep(1)
+      calculate_move
+    end
+
     def take_move(_move)
     end
 

@@ -21,18 +21,17 @@ module MouseyRevenge
       NAME
     end
 
-    def calculate_move(target_position:, should_sleep: true, context: nil)
+    def calculate_move(target_position:, context: nil)
       @result = nil
-      result = find_cached_path(
-        target_position: target_position,
-        should_sleep: should_sleep
-      )
+      result = find_cached_path(target_position: target_position)
       return result if result
       return switch_to_trapped_context(context: context) if no_free_moves?
-      find_new_path(
-        target_position: target_position,
-        should_sleep: should_sleep
-      )
+      find_new_path(target_position: target_position)
+    end
+
+    def calculate_move_and_sleep(target_position:, context:)
+      sleep(1)
+      calculate_move(target_position: target_position, context: context)
     end
 
     def take_move(move)
@@ -86,21 +85,19 @@ module MouseyRevenge
       current_actor
     end
 
-    def find_new_path(target_position:, should_sleep: true)
+    def find_new_path(target_position:)
       find_path(target_position)
-      sleep(1) if should_sleep
       @previous_target = target_position.clone
       current_actor
     end
 
-    def find_cached_path(target_position:, should_sleep:)
+    def find_cached_path(target_position:)
       target_x = target_position.fetch(:x)
       target_y = target_position.fetch(:y)
       cached_trail = @cache.fetch([target_x, target_y], nil)
       return nil unless cached_trail
       @result = cached_trail.shift
       @cache = { [target_x, target_y] => cached_trail }
-      sleep(1) if should_sleep
       current_actor
     end
 

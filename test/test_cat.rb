@@ -14,36 +14,26 @@ class TestCat < Test::Unit::TestCase
   end
 
   should 'calculate move' do
-    @cat.calculate_move(
-      target_position: { x: 1, y: 1 },
-      should_sleep: false
-    )
+    @cat.calculate_move(target_position: { x: 1, y: 1 })
     assert_equal :down, @cat.symbolic_result
   end
 
   should 'synchronously take moves' do
-    @cat.calculate_move(
-      target_position: { x: 1, y: 1 },
-      should_sleep: false
-    )
+    @cat.calculate_move(target_position: { x: 1, y: 1 })
     @cat.take_move(@cat.symbolic_result)
     assert_equal nil, @grid.get(x: 0, y: 0)
     assert_equal :cat, @grid.get(x: 0, y: 1).name
   end
 
   should 'update its own record of its position' do
-    @cat.calculate_move(
-      target_position: { x: 1, y: 1 },
-      should_sleep: false
-    )
+    @cat.calculate_move(target_position: { x: 1, y: 1 })
     @cat.take_move(@cat.symbolic_result)
     assert_equal ({ x: 0, y: 1 }), @cat.instance_variable_get(:@position)
   end
 
   should 'support futures' do
     assert_equal :down, @cat.future.calculate_move(
-      target_position: { x: 1, y: 1 },
-      should_sleep: false
+      target_position: { x: 1, y: 1 }
     ).value.symbolic_result
   end
 
@@ -76,10 +66,7 @@ class TestCat < Test::Unit::TestCase
     @designer = MouseyRevenge::GridDesigner.new(@grid)
     @designer.write_to_grid(@level_design)
     @context = MouseyRevenge::CatContext.new(grid: @grid, position: { x: 0, y: 0 })
-    @context.calculate_move(
-      target_position: { x: 1, y: 0 },
-      should_sleep: false
-    )
+    @context.calculate_move(target_position: { x: 1, y: 0 })
     assert_equal MouseyRevenge::TrappedCat, @context.state.class
   end
 end

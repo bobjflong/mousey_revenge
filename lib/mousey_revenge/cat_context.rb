@@ -14,7 +14,7 @@ module MouseyRevenge
     end
 
     def future_calculate_move(args)
-      state.future.calculate_move(args.merge(context: self))
+      state.future.calculate_move_and_sleep(args.merge(context: self))
     end
 
     def calculate_move(args)

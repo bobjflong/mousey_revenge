@@ -30,10 +30,7 @@ class TestCatContext < Test::Unit::TestCase
 
   should 'delegate methods that require context' do
     assert_nothing_raised do
-      @context.calculate_move(
-        should_sleep: false,
-        target_position: { x: 1, y: 0 }
-      )
+      @context.calculate_move(target_position: { x: 1, y: 0 })
     end
   end
 end
