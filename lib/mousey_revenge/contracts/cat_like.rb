@@ -16,6 +16,7 @@ module MouseyRevenge
       confirm :calculate_move
       confirm :take_move
       confirm :symbolic_result
+      confirm :trapped?
     end
   end
 end

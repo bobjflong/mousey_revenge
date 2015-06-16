@@ -59,4 +59,27 @@ class TestCat < Test::Unit::TestCase
     @cat = MouseyRevenge::Cat.new(grid: @grid, position: { x: 0, y: 0 })
     assert_nil @cat.send(:random_valid_move)
   end
+
+  # TODO is it even necessary to have trapped? part of the interface?
+  should 'report false when ask if trapped' do
+    @level_design = "c+\n+-"
+    @grid = MouseyRevenge::Grid.new(width: 2, height: 2, square_size: 1)
+    @designer = MouseyRevenge::GridDesigner.new(@grid)
+    @designer.write_to_grid(@level_design)
+    @cat = MouseyRevenge::Cat.new(grid: @grid, position: { x: 0, y: 0 })
+    assert_equal false, @cat.trapped?
+  end
+
+  should 'set the context state to TrappedCat when trapped' do
+    @level_design = "c+\n+-"
+    @grid = MouseyRevenge::Grid.new(width: 2, height: 2, square_size: 1)
+    @designer = MouseyRevenge::GridDesigner.new(@grid)
+    @designer.write_to_grid(@level_design)
+    @context = MouseyRevenge::CatContext.new(grid: @grid, position: { x: 0, y: 0 })
+    @context.calculate_move(
+      target_position: { x: 1, y: 0 },
+      should_sleep: false
+    )
+    assert_equal MouseyRevenge::TrappedCat, @context.state.class
+  end
 end

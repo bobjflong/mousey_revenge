@@ -28,6 +28,7 @@ module MouseyRevenge
         should_sleep: should_sleep
       )
       return result if result
+      return switch_to_trapped_context(context: context) if no_free_moves?
       find_new_path(
         target_position: target_position,
         should_sleep: should_sleep
@@ -57,9 +58,32 @@ module MouseyRevenge
       return :up if result.fetch(1) < position_y
     end
 
+    def trapped?
+      false
+    end
+
     private
 
     def noop
+    end
+
+    def no_free_moves?
+      Neighbourhood.for(
+        x: position_x,
+        y: position_y,
+        grid: @grid
+      ).empty?
+    end
+
+    def switch_to_trapped_context(context:)
+      context.update_state(
+        TrappedCat.new(
+          grid: @grid,
+          position: position,
+          uuid: uuid
+        )
+      )
+      current_actor
     end
 
     def find_new_path(target_position:, should_sleep: true)

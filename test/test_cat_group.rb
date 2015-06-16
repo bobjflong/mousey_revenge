@@ -26,15 +26,14 @@ class TestCatGroup < Test::Unit::TestCase
   end
 
   should 'tell all of those cats to start computing a search path' do
-    future_receiver = mock
-    future_receiver.expects(:calculate_move).with(
-      target_position: { x: 3, y: 3 }
-    ).times(5)
     fake_cats = []
     5.times do
       fake_cat = mock
       fake_cat.stubs(:uuid).returns(SecureRandom.uuid)
-      fake_cat.stubs(:future).returns(future_receiver)
+      fake_cat.stubs(:future_calculate_move).with(
+        target_position: { x: 3, y: 3 }
+      )
+      fake_cat.stubs(:trapped?).returns(false)
       fake_cats << fake_cat
     end
 

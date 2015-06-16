@@ -13,6 +13,10 @@ module MouseyRevenge
       @state = new_state
     end
 
+    def future_calculate_move(args)
+      state.future.calculate_move(args.merge(context: self))
+    end
+
     def calculate_move(args)
       state.calculate_move(args.merge(context: self))
     end
