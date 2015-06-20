@@ -17,6 +17,10 @@ module MouseyRevenge
       state.future.calculate_move_and_sleep(args.merge(context: self))
     end
 
+    def future_turn_into_cheese
+      state.future.turn_into_cheese
+    end
+
     def calculate_move(args)
       state.calculate_move(args.merge(context: self))
     end

@@ -20,6 +20,7 @@ module MouseyRevenge
     def draw
       hunt_for_target(@last_mouse_location)
       check_current_futures
+      turn_cats_into_cheese_if_all_trapped
     end
 
     def update(params)
@@ -46,6 +47,11 @@ module MouseyRevenge
           end
         end
       end
+    end
+
+    def turn_cats_into_cheese_if_all_trapped
+      return unless cats.all?(&:immobile?)
+      cats.map(&:future_turn_into_cheese)
     end
 
     private
