@@ -7,7 +7,7 @@ module MouseyRevenge
     NAME = :mouse
     SPRITE_PATH = '/../../assets/mouse.png'
 
-    attr_reader :grid, :position
+    attr_reader :grid, :position, :score
 
     include Drawable
 
@@ -28,6 +28,7 @@ module MouseyRevenge
       move_to_new_position(direction)
     rescue OccupiedError
       try_to_shift_blocks(direction)
+      try_to_eat_cheese(direction)
       move_to_new_position(direction) rescue OccupiedError
     end
 
@@ -38,6 +39,24 @@ module MouseyRevenge
         return dir if params.fetch(dir, false)
       end
       nil
+    end
+
+    def try_to_eat_cheese(direction)
+      cheese_x = position_x + Math.x_off(direction)
+      cheese_y = position_y + Math.y_off(direction)
+      possibly_cheese = @grid.get(x: cheese_x, y: cheese_y)
+      return unless possibly_cheese && possibly_cheese.respond_to?(:edible?)
+      return unless possibly_cheese.edible?
+      eat(x: cheese_x, y: cheese_y)
+    end
+
+    def eat(x:, y:)
+      @grid.overwrite(x: x, y: y, value: nil)
+      score!
+    end
+
+    def score!
+      @score = (@score || 0) + 1
     end
 
     def try_to_shift_blocks(msg)

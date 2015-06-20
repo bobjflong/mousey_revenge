@@ -23,6 +23,7 @@ module MouseyRevenge
       @grid = Grid.new(width: GRID_WIDTH, height: GRID_HEIGHT, square_size: 10)
       @designer = GridDesigner.new(@grid)
       @designer.write_to_grid(GridDesigner::LEVEL_1)
+      @font = Gosu::Font.new(self, Gosu::default_font_name, 18)
 
       @cats = []
 
@@ -44,6 +45,7 @@ module MouseyRevenge
     end
 
     def draw
+      @font.draw("Score: #{@mouse.score || 0}", 0, 0, 1.0)
       draw_grid
       draw_npcs
     end

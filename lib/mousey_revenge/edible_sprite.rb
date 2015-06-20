@@ -17,5 +17,9 @@ module MouseyRevenge
     def reset_sprite
       @sprite = nil
     end
+
+    def edible?
+      cheese
+    end
   end
 end

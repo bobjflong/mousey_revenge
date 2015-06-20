@@ -29,6 +29,11 @@ module MouseyRevenge
       state.draw(*args)
     end
 
+    def edible?
+      return false unless state.respond_to?(:edible?)
+      state.edible?
+    end
+
     def method_missing(m, *args)
       return state.send(m, *args) if state.respond_to?(m)
       fail NoMethodError
