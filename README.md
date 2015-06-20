@@ -1,7 +1,6 @@
 # mousey_revenge
 
-[![Build Status](https://semaphoreci.com/api/v1/projects/7e40e292-635c-4b24-a500-50828c931f07/446986/badge.svg)](https://semaphoreci.com/robertjflong/mousey_revenge)
-
+[![Build Status](https://semaphoreci.com/api/v1/projects/7e40e292-635c-4b24-a500-50828c931f07/446986/badge.svg)](https://semaphoreci.com/robertjflong/mousey_revenge) [![Code Climate](https://codeclimate.com/github/bobjflong/mousey_revenge/badges/gpa.svg)](https://codeclimate.com/github/bobjflong/mousey_revenge)
 
 WIP clone of a classic windows game
 
