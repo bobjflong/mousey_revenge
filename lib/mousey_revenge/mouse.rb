@@ -21,7 +21,6 @@ module MouseyRevenge
       NAME
     end
 
-    # TODO: refactor this big method
     def update(params)
       direction = parse(params)
       return unless direction
