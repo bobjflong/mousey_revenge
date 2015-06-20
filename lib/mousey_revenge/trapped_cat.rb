@@ -10,6 +10,7 @@ module MouseyRevenge
     include Celluloid
     include Drawable
     include UUID
+    include EdibleSprite
 
     attr_reader :cheese
 
@@ -22,10 +23,6 @@ module MouseyRevenge
 
     def name
       NAME
-    end
-
-    def sprite_path
-      cheese ? SPRITE_PATH_ALT : SPRITE_PATH
     end
 
     def calculate_move(*)
@@ -47,17 +44,7 @@ module MouseyRevenge
       true
     end
 
-    def turn_into_cheese
-      return if cheese
-      @cheese = Cheese.new(grid: grid, position: position, uuid: uuid)
-      reset_sprite
-    end
-
     private
-
-    def reset_sprite
-      @sprite = nil
-    end
 
     attr_reader :grid, :position
   end

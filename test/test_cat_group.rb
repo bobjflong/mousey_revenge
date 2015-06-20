@@ -25,15 +25,6 @@ class TestCatGroup < Test::Unit::TestCase
     assert_equal [MouseyRevenge::CatContext], group.map(&:class).uniq
   end
 
-  should 'turn the cats to cheese when they\'ve all been trapped' do
-    group = MouseyRevenge::CatGroup.new(game: @game, grid: @grid, positions: basic_positions)
-    group.map do |context|
-      context.state.send(:switch_to_trapped_context, context: context)
-    end
-    group.send(:turn_cats_into_cheese_if_all_trapped)
-    assert_equal 5, group.map { |c| c.cheese }.uniq.size
-  end
-
   should 'tell all of those cats to start computing a search path' do
     fake_cats = []
     5.times do
@@ -80,5 +71,14 @@ class TestCatGroup < Test::Unit::TestCase
     game = mock
     game.expects(:subscribe)
     MouseyRevenge::CatGroup.new(game: game, grid: @grid, positions: [])
+  end
+
+  should 'turn the cats to cheese when they\'ve all been trapped' do
+    group = MouseyRevenge::CatGroup.new(game: @game, grid: @grid, positions: basic_positions)
+    group.map do |context|
+      context.state.send(:switch_to_trapped_context, context: context)
+    end
+    group.send(:turn_cats_into_cheese_if_all_trapped)
+    assert_equal 5, group.map(&:cheese).uniq.size
   end
 end
