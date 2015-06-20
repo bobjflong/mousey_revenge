@@ -1,5 +1,4 @@
 require 'helper'
-require 'ostruct'
 require 'mocha'
 
 class TestGridSlider < Test::Unit::TestCase

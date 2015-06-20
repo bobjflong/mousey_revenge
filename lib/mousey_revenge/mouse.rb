@@ -83,10 +83,6 @@ module MouseyRevenge
 
     def noop; end
 
-    def prefix
-      File.dirname(__FILE__)
-    end
-
     def grid_shifter
       @grid_shifter ||= GridShifter.new(grid: grid)
     end
