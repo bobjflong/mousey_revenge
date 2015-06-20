@@ -3,7 +3,7 @@ require 'securerandom'
 
 class TestCatGroup < Test::Unit::TestCase
   setup do
-    level_design = (["-" * 5] * 5).join "\n"
+    level_design = (['-' * 5] * 5).join "\n"
     @grid = MouseyRevenge::Grid.new(width: 5, height: 5, square_size: 10)
     @designer = MouseyRevenge::GridDesigner.new(@grid)
     @designer.write_to_grid(level_design)
