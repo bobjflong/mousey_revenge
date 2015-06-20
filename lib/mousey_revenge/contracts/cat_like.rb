@@ -17,7 +17,7 @@ module MouseyRevenge
       confirm :calculate_move_and_sleep
       confirm :take_move
       confirm :symbolic_result
-      confirm :trapped?
+      confirm :immobile?
     end
   end
 end

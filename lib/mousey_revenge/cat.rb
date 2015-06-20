@@ -57,7 +57,7 @@ module MouseyRevenge
       return :up if result.fetch(1) < position_y
     end
 
-    def trapped?
+    def immobile?
       false
     end
 

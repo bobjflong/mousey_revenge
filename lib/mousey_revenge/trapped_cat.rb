@@ -36,7 +36,8 @@ module MouseyRevenge
     def symbolic_result
     end
 
-    def trapped?
+    def immobile?
+      true
     end
 
     private

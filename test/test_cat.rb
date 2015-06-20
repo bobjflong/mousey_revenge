@@ -50,14 +50,13 @@ class TestCat < Test::Unit::TestCase
     assert_nil @cat.send(:random_valid_move)
   end
 
-  # TODO is it even necessary to have trapped? part of the interface?
   should 'report false when ask if trapped' do
     @level_design = "c+\n+-"
     @grid = MouseyRevenge::Grid.new(width: 2, height: 2, square_size: 1)
     @designer = MouseyRevenge::GridDesigner.new(@grid)
     @designer.write_to_grid(@level_design)
     @cat = MouseyRevenge::Cat.new(grid: @grid, position: { x: 0, y: 0 })
-    assert_equal false, @cat.trapped?
+    assert_equal false, @cat.immobile?
   end
 
   should 'set the context state to TrappedCat when trapped' do

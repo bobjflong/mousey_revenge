@@ -33,7 +33,7 @@ class TestCatGroup < Test::Unit::TestCase
       fake_cat.stubs(:future_calculate_move).with(
         target_position: { x: 3, y: 3 }
       )
-      fake_cat.stubs(:trapped?).returns(false)
+      fake_cat.stubs(:immobile?).returns(false)
       fake_cats << fake_cat
     end
 

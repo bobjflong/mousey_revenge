@@ -30,7 +30,7 @@ module MouseyRevenge
     def hunt_for_target(target)
       cats.each do |cat|
         next if pending_result?(cat)
-        next if cat.trapped?
+        next if cat.immobile?
         futures_currently_calculating <<
           cat.future_calculate_move(target_position: target)
         pending_cats << cat.uuid
