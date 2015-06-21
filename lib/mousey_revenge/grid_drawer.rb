@@ -17,16 +17,8 @@ module MouseyRevenge
 
     def initialize
       super(REAL_WIDTH, REAL_WIDTH)
-      @block = Gosu::Image.new(prefix + '/../../assets/tile.png', tileable: true)
-      @background = Gosu::Image.new(prefix + '/../../assets/background.png', tileable: true)
-
-      @grid = Grid.new(width: GRID_WIDTH, height: GRID_HEIGHT, square_size: 10)
-      @designer = GridDesigner.new(@grid)
-      @designer.write_to_grid(GridDesigner::LEVEL_1)
-      @font = Gosu::Font.new(self, Gosu::default_font_name, 18)
-
-      @cats = []
-
+      set_up_base_sprites
+      set_up_grid
       set_up_mouse(@designer.mouse_location)
       set_up_cats(@designer.cat_locations)
       broadcast(:update, mouse_location: @mouse.position)
@@ -45,12 +37,23 @@ module MouseyRevenge
     end
 
     def draw
-      @font.draw("Score: #{@mouse.score || 0}", 0, 0, 1.0)
+      font.draw("Score: #{@mouse.score || 0}", 0, 0, 1.0)
       draw_grid
       draw_npcs
     end
 
     private
+
+    def font
+      @font ||= Gosu::Font.new(self, Gosu::default_font_name, 18)
+    end
+
+
+    def set_up_grid
+      @grid = Grid.new(width: GRID_WIDTH, height: GRID_HEIGHT, square_size: 10)
+      @designer = GridDesigner.new(@grid)
+      @designer.write_to_grid(GridDesigner::LEVEL_1)
+    end
 
     def set_up_mouse(position)
       @mouse = MouseyRevenge::Mouse.new(
@@ -84,7 +87,11 @@ module MouseyRevenge
       @cat_group.draw
     end
 
-    # TODO: do properly - this class should not have knowledge of sprites
+    def set_up_base_sprites
+      @block = Gosu::Image.new(prefix + '/../../assets/tile.png', tileable: true)
+      @background = Gosu::Image.new(prefix + '/../../assets/background.png', tileable: true)
+    end
+
     def draw_grid
       GRID_WIDTH.times do |x|
         GRID_HEIGHT.times do |y|
