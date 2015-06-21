@@ -4,11 +4,12 @@
 
 WIP clone of a classic windows game
 
-## Current status!
+## Current status
 
-Now with moving cats:
+Move blocks around, trap cats. Once all of the cats on the screen have
+been trapped, they will turn into cheese:
 
-<img src="https://raw.githubusercontent.com/bobjflong/mousey_revenge/eb3aa01d190b8088ccc6e7c6b28d91e7b0aa225a/wip.gif" />
+<img src="https://raw.githubusercontent.com/bobjflong/mousey_revenge/master/cheese.gif" />
 
 ## Contributing to mousey_revenge
 
