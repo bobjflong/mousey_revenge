@@ -6,22 +6,30 @@ require 'gosu'
 require 'wisper'
 
 module MouseyRevenge
-  def self.display
-    GridWindow.new.show
+  def self.headless?
+    ENV.fetch('headless', false)
   end
 
-  class GridWindow < Gosu::Window
+  def self.display
+    GridWindow.new.show unless headless?
+  end
+
+  def self.superclass
+    headless? ? FakeWindow : Gosu::Window
+  end
+
+  class GridWindow < superclass
     include Wisper::Publisher
 
-    attr_reader :grid, :designer
+    attr_reader :grid, :designer, :mouse
 
     def initialize
       super(REAL_WIDTH, REAL_WIDTH)
       set_up_base_sprites
       set_up_grid
-      set_up_mouse(@designer.mouse_location)
-      set_up_cats(@designer.cat_locations)
-      broadcast(:update, mouse_location: @mouse.position)
+      set_up_mouse(designer.mouse_location)
+      set_up_cats(designer.cat_locations)
+      broadcast(:update, mouse_location: mouse.position)
     end
 
     def update
@@ -30,7 +38,7 @@ module MouseyRevenge
         left: Gosu.button_down?(Gosu::KbLeft),
         up: Gosu.button_down?(Gosu::KbUp),
         down: Gosu.button_down?(Gosu::KbDown),
-        mouse_location: @mouse.position
+        mouse_location: mouse.position
       }
       broadcast(:update, params) if params != @last_params
       @last_params = params
