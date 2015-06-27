@@ -7,21 +7,11 @@ module MouseyRevenge
     def_delegator :designer, :mouse_location
 
     def initialize(game:)
+      @game = game
       @grid = Grid.new(width: GRID_WIDTH, height: GRID_HEIGHT, square_size: 10)
-      @block = image_class.new(prefix + '/../../assets/tile.png', tileable: true)
-      @background = image_class.new(prefix + '/../../assets/background.png', tileable: true)
-
-      @designer = GridDesigner.new(@grid)
-      @designer.write_to_grid(GridDesigner::LEVEL_1)
-
-      @cat_group = CatGroup.new(grid: @grid, positions: designer.cat_locations, game: game)
-      @cat_group.cats.each do |cat|
-        @grid.overwrite(
-          x: cat.position_x,
-          y: cat.position_y,
-          value: cat
-        )
-      end
+      set_up_base_sprites
+      write_level_to_grid
+      set_up_cat_group
     end
 
     def draw
@@ -49,6 +39,27 @@ module MouseyRevenge
           end
         end
       end
+    end
+
+    def set_up_cat_group
+      @cat_group = CatGroup.new(grid: @grid, positions: designer.cat_locations, game: @game)
+      @cat_group.cats.each do |cat|
+        @grid.overwrite(
+          x: cat.position_x,
+          y: cat.position_y,
+          value: cat
+        )
+      end
+    end
+
+    def set_up_base_sprites
+      @block = image_class.new(prefix + '/../../assets/tile.png', tileable: true)
+      @background = image_class.new(prefix + '/../../assets/background.png', tileable: true)
+    end
+
+    def write_level_to_grid
+      @designer = GridDesigner.new(@grid)
+      @designer.write_to_grid(GridDesigner::LEVEL_1)
     end
 
     def draw_npcs
