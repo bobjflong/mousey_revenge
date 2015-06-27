@@ -4,6 +4,7 @@
 
 require 'gosu'
 require 'wisper'
+require 'mousey_revenge/level_scene'
 
 module MouseyRevenge
   def self.headless?
@@ -25,10 +26,9 @@ module MouseyRevenge
 
     def initialize
       super(REAL_WIDTH, REAL_WIDTH)
-      set_up_base_sprites
-      set_up_grid
-      set_up_mouse(designer.mouse_location)
-      set_up_cats(designer.cat_locations)
+      @level_scene = LevelScene.new(game: self)
+      @grid = @level_scene.grid
+      set_up_mouse(@level_scene.mouse_location)
       broadcast(:update, mouse_location: mouse.position)
     end
 
@@ -46,21 +46,15 @@ module MouseyRevenge
 
     def draw
       font.draw("Score: #{@mouse.score || 0}", 0, 0, 1.0)
-      draw_grid
-      draw_npcs
+      level_scene.draw
     end
 
     private
 
+    attr_reader :level_scene
+
     def font
       @font ||= Gosu::Font.new(self, Gosu::default_font_name, 18)
-    end
-
-
-    def set_up_grid
-      @grid = Grid.new(width: GRID_WIDTH, height: GRID_HEIGHT, square_size: 10)
-      @designer = GridDesigner.new(@grid)
-      @designer.write_to_grid(GridDesigner::LEVEL_1)
     end
 
     def set_up_mouse(position)
@@ -74,45 +68,6 @@ module MouseyRevenge
         y: position.fetch(:y),
         value: @mouse
       )
-    end
-
-    def set_up_cats(positions)
-      @cat_group = CatGroup.new(grid: @grid, positions: positions, game: self)
-      @cat_group.cats.each do |cat|
-        @grid.overwrite(
-          x: cat.position_x,
-          y: cat.position_y,
-          value: cat
-        )
-      end
-    end
-
-    def prefix
-      File.dirname(__FILE__)
-    end
-
-    def draw_npcs
-      @cat_group.draw
-    end
-
-    def set_up_base_sprites
-      @block = Gosu::Image.new(prefix + '/../../assets/tile.png', tileable: true)
-      @background = Gosu::Image.new(prefix + '/../../assets/background.png', tileable: true)
-    end
-
-    def draw_grid
-      GRID_WIDTH.times do |x|
-        GRID_HEIGHT.times do |y|
-          cell = @grid.get(x: x, y: y)
-          if cell && cell.name == :block
-            @block.draw(x * CELL_SIZE, y * CELL_SIZE, 0)
-          elsif cell.respond_to?(:draw)
-            cell.draw
-          else
-            @background.draw(x * CELL_SIZE, y * CELL_SIZE, 0)
-          end
-        end
-      end
     end
   end
 end
