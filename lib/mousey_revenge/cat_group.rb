@@ -51,7 +51,7 @@ module MouseyRevenge
 
     def turn_cats_into_cheese_if_all_trapped
       return unless cats.all?(&:immobile?)
-      cats.map(&:future_turn_into_cheese)
+      cats.map(&:turn_into_cheese)
     end
 
     private

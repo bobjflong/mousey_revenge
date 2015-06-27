@@ -39,3 +39,4 @@ require 'mousey_revenge/cheese'
 require 'mousey_revenge/cat_group'
 require 'mousey_revenge/level_scene'
 require 'mousey_revenge/kill_screen'
+require 'mousey_revenge/grid_drawer' if ENV['PLAY']

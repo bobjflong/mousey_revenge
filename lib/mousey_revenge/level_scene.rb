@@ -1,6 +1,6 @@
 module MouseyRevenge
   class LevelScene
-    attr_reader :grid, :designer
+    attr_reader :grid, :designer, :mouse
 
     extend Forwardable
 
@@ -12,6 +12,7 @@ module MouseyRevenge
       set_up_base_sprites
       write_level_to_grid
       set_up_cat_group
+      set_up_mouse(mouse_location)
     end
 
     def draw
@@ -20,6 +21,19 @@ module MouseyRevenge
     end
 
     private
+
+    def set_up_mouse(position)
+      @mouse = MouseyRevenge::Mouse.new(
+        game: @game,
+        grid: @grid,
+        position: position
+      )
+      grid.overwrite(
+        x: position.fetch(:x),
+        y: position.fetch(:y),
+        value: @mouse
+      )
+    end
 
     def image_class
       Gosu::Image
@@ -68,6 +82,14 @@ module MouseyRevenge
 
     def prefix
       File.dirname(__FILE__)
+    end
+
+    def mouse_position
+      mouse.position
+    end
+
+    def mouse_score
+      mouse.score
     end
   end
 end

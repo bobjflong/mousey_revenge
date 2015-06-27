@@ -22,14 +22,17 @@ module MouseyRevenge
   class GridWindow < superclass
     include Wisper::Publisher
 
-    attr_reader :grid, :designer, :mouse
+    extend Forwardable
+
+    def_delegator :level_scene, :mouse_position
+    def_delegator :level_scene, :mouse_score
+
+    attr_reader :grid, :designer
 
     def initialize
       super(REAL_WIDTH, REAL_WIDTH)
       @level_scene = LevelScene.new(game: self)
-      @grid = @level_scene.grid
-      set_up_mouse(@level_scene.mouse_location)
-      broadcast(:update, mouse_location: mouse.position)
+      broadcast(:update, mouse_location: mouse_position)
     end
 
     def update
@@ -38,14 +41,14 @@ module MouseyRevenge
         left: Gosu.button_down?(Gosu::KbLeft),
         up: Gosu.button_down?(Gosu::KbUp),
         down: Gosu.button_down?(Gosu::KbDown),
-        mouse_location: mouse.position
+        mouse_location: mouse_position
       }
       broadcast(:update, params) if params != @last_params
       @last_params = params
     end
 
     def draw
-      font.draw("Score: #{@mouse.score || 0}", 0, 0, 1.0)
+      font.draw("Score: #{mouse_score || 0}", 0, 0, 1.0)
       level_scene.draw
     end
 
@@ -55,19 +58,6 @@ module MouseyRevenge
 
     def font
       @font ||= Gosu::Font.new(self, Gosu::default_font_name, 18)
-    end
-
-    def set_up_mouse(position)
-      @mouse = MouseyRevenge::Mouse.new(
-        game: self,
-        grid: @grid,
-        position: position
-      )
-      grid.overwrite(
-        x: position.fetch(:x),
-        y: position.fetch(:y),
-        value: @mouse
-      )
     end
   end
 end

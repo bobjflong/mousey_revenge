@@ -32,6 +32,15 @@ class TestLevelScene < Test::Unit::TestCase
     assert_equal MouseyRevenge::CatGroup, @level_scene.instance_variable_get(:@cat_group).class
   end
 
+  should 'add a mouse to the grid' do
+    grid_data = @level_scene.grid.send(:grid_data).flatten
+    assert_equal true, grid_data.any? { |i| MouseyRevenge::Mouse === i }
+  end
+
+  should 'assign a mouse' do
+    assert_equal MouseyRevenge::Mouse, @level_scene.instance_variable_get(:@mouse).class
+  end
+
   should 'send :draw to the cat_group when drawing npcs' do
     cat_group = mock
     cat_group.expects(:draw)
