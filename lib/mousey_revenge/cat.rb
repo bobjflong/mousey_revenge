@@ -1,5 +1,6 @@
 require 'celluloid/autostart'
 require 'mousey_revenge/contracts/cat_like'
+require 'mousey_revenge/hunter'
 
 module MouseyRevenge
   class Cat
@@ -9,6 +10,9 @@ module MouseyRevenge
     include Celluloid
     include Drawable
     include UUID
+
+    extend Forwardable
+    def_delegator :hunter, :attack_mouse_if_possible
 
     def initialize(grid:, position:)
       @grid = grid
@@ -61,25 +65,7 @@ module MouseyRevenge
       false
     end
 
-    def attack_mouse_if_possible
-      neighbours = Neighbourhood.for(
-        x: position_x,
-        y: position_y,
-        grid: @grid,
-        options: { excluding_occupied_spaces: false }
-      )
-      mouse_point = mouse_in_neighbourhood(neighbours)
-      return unless mouse_point
-      mouse_point
-    end
-
     private
-
-    def mouse_in_neighbourhood(neighbours)
-      neighbours.find do |neighbour|
-        neighbour.contents.is_a?(MouseyRevenge::Mouse)
-      end
-    end
 
     def noop
     end
@@ -150,6 +136,10 @@ module MouseyRevenge
     def searcher
       GridSearcher.new(grid: @grid)
         .start_at(x: position_x, y: position_y)
+    end
+
+    def hunter
+      Hunter.new(position: position, grid: @grid)
     end
 
     attr_reader :grid, :position

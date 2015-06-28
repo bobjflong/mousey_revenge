@@ -4,11 +4,18 @@ module MouseyRevenge
 
     include Drawable
 
-    def initialize
+    def initialize(*)
       @position = {
         x: 4.4,
         y: 8.4
       }
+    end
+
+    def mouse_position
+      { x: 0, y: 0 }
+    end
+
+    def mouse_score
     end
 
     private

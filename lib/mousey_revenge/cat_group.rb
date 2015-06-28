@@ -10,6 +10,7 @@ module MouseyRevenge
     def_delegator :cats, :map
 
     def initialize(game:, grid:, positions:)
+      @game = game
       @grid = grid
       @cats = positions.map { |p| position_to_cat p }
       @pending_cats = []
@@ -17,6 +18,9 @@ module MouseyRevenge
       game.subscribe(self)
     end
 
+    # TODO: bobjflong
+    # this is an inaccurate method name, can we move this logic to #update?
+    # the game-loop should perhaps broadcast on everyframe
     def draw
       hunt_for_target(@last_mouse_location)
       check_current_futures
@@ -42,7 +46,7 @@ module MouseyRevenge
       futures_currently_calculating.delete_if do |future|
         if future.ready?
           future.value.tap do |cat|
-            cat.take_move(cat.symbolic_result)
+            attack_mouse_with_cat(cat) || cat.take_move(cat.symbolic_result)
             pending_cats.delete(cat.uuid)
           end
         end
@@ -55,6 +59,14 @@ module MouseyRevenge
     end
 
     private
+
+    attr_reader :game
+
+    def attack_mouse_with_cat(cat)
+      result = cat.attack_mouse_if_possible
+      game.transition_to(KillScreen) if result
+      result
+    end
 
     def pending_result?(cat)
       @pending_cats.include?(cat.uuid)

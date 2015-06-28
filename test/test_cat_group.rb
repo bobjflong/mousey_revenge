@@ -50,6 +50,7 @@ class TestCatGroup < Test::Unit::TestCase
   should 'check futures for results, and maintains the "pending" records' do
     result = mock
     result.stubs(:uuid).returns('1234')
+    result.stubs(:attack_mouse_if_possible)
     result.stubs(:symbolic_result).returns(:up)
     result.stubs(:take_move).with(:up)
 

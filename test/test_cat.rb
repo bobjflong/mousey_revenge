@@ -68,4 +68,17 @@ class TestCat < Test::Unit::TestCase
     @context.calculate_move(target_position: { x: 1, y: 0 })
     assert_equal MouseyRevenge::TrappedCat, @context.state.class
   end
+
+  should "attack mice that are in range" do
+    @level_design = "cm\n+-"
+    @grid = MouseyRevenge::Grid.new(width: 2, height: 2, square_size: 1)
+    @designer = MouseyRevenge::GridDesigner.new(@grid)
+    @designer.write_to_grid(@level_design)
+    game = mock
+    game.stub_everything
+    @grid.overwrite(x: 1, y: 0, value: MouseyRevenge::Mouse.new(game: game, grid: @grid, position: { x: 1, y: 0}))
+    @context = MouseyRevenge::CatContext.new(grid: @grid, position: { x: 0, y: 0 })
+    mouse_result = @context.attack_mouse_if_possible
+    assert_equal MouseyRevenge::Mouse, mouse_result.contents.class
+  end
 end

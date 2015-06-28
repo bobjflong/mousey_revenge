@@ -23,6 +23,7 @@ module MouseyRevenge
 
     def_delegator :scene_manager, :mouse_score
     def_delegator :scene_manager, :mouse_position
+    def_delegator :scene_manager, :transition_to
 
     attr_reader :grid, :designer
 
@@ -44,7 +45,7 @@ module MouseyRevenge
     end
 
     def draw
-      font.draw("Score: #{mouse_score || 0}", 0, 0, 1.0)
+      font.draw("Score: #{mouse_score || 0}", 0, 0, 1.0) if mouse_score
       scene_manager.draw
     end
 
