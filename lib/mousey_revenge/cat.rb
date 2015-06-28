@@ -30,7 +30,7 @@ module MouseyRevenge
     end
 
     def calculate_move_and_sleep(target_position:, context:)
-      sleep(1)
+      sleep(0.5)
       calculate_move(target_position: target_position, context: context)
     end
 
@@ -61,7 +61,25 @@ module MouseyRevenge
       false
     end
 
+    def attack_mouse_if_possible
+      neighbours = Neighbourhood.for(
+        x: position_x,
+        y: position_y,
+        grid: @grid,
+        options: { excluding_occupied_spaces: false }
+      )
+      mouse_point = mouse_in_neighbourhood(neighbours)
+      return unless mouse_point
+      mouse_point
+    end
+
     private
+
+    def mouse_in_neighbourhood(neighbours)
+      neighbours.find do |neighbour|
+        neighbour.contents.is_a?(MouseyRevenge::Mouse)
+      end
+    end
 
     def noop
     end

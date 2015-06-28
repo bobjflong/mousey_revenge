@@ -1,10 +1,10 @@
 require 'mocha'
 require 'mousey_revenge/fake_window'
 
-class TestGridDrawer < Test::Unit::TestCase
+class TestGame < Test::Unit::TestCase
   setup do
     ENV['headless'] = true.to_s
-    require 'mousey_revenge/grid_drawer'
+    require 'mousey_revenge/game'
   end
 
   teardown do

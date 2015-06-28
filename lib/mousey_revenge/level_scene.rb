@@ -20,6 +20,14 @@ module MouseyRevenge
       draw_npcs
     end
 
+    def mouse_position
+      mouse.position
+    end
+
+    def mouse_score
+      mouse.score
+    end
+
     private
 
     def set_up_mouse(position)
@@ -82,14 +90,6 @@ module MouseyRevenge
 
     def prefix
       File.dirname(__FILE__)
-    end
-
-    def mouse_position
-      mouse.position
-    end
-
-    def mouse_score
-      mouse.score
     end
   end
 end
