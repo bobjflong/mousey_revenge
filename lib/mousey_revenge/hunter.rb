@@ -2,7 +2,7 @@ module MouseyRevenge
   class Hunter
     attr_reader :position_x, :position_y, :grid
 
-    def initialize(position:, grid: grid)
+    def initialize(position:, grid:)
       @position_x = position.fetch(:x)
       @position_y = position.fetch(:y)
       @grid = grid
