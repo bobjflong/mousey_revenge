@@ -1,29 +1,23 @@
 require 'ostruct'
 
 module MouseyRevenge
-  # GridDesigner's representation of a Block
-  class BlockRepresentation
-    def name
-      :block
-    end
+  def self.create_basic_sprite_class(representation_name)
+    created_class = Class.new do
+      def name
+        self.class.name.gsub(/Representation/,'').downcase.to_sym
+      end
 
-    def can_slide?
-      true
+      def can_slide?
+        name == :block
+      end
     end
+    Object.const_set("#{representation_name.capitalize}Representation", created_class)
   end
 
-  # GridDesigner's representation of a Mouse
-  class MouseRepresentation
-    def name
-      :mouse
-    end
-  end
-
-  class CatRepresentation
-    def name
-      :cat
-    end
-  end
+  create_basic_sprite_class('rock')
+  create_basic_sprite_class('mouse')
+  create_basic_sprite_class('cat')
+  create_basic_sprite_class('block')
 
   class UnknownGridItem < StandardError; end
   # Capable of taking string representations of Levels, and writing them
@@ -31,6 +25,7 @@ module MouseyRevenge
   class GridDesigner
     BLANK = '-'
     BLOCK = '+'
+    ROCK = 'r'
     MOUSE = 'm'
     CAT = 'c'
 
@@ -56,6 +51,7 @@ module MouseyRevenge
     def translate(x, y, chr)
       return nil if chr == BLANK
       return new_block if chr == BLOCK
+      return new_rock if chr == ROCK
       if chr == MOUSE
         @mouse_location = { x: x, y: y }
         return new_mouse
@@ -65,6 +61,10 @@ module MouseyRevenge
         return new_cat
       end
       fail UnknownGridItem
+    end
+
+    def new_rock
+      RockRepresentation.new
     end
 
     def new_block
@@ -81,13 +81,13 @@ module MouseyRevenge
 
     LEVEL_1 = <<END
 ------------------------
--------------------c----
---c---------------------
----++++++++++++++++++---
----++++++++++++++++++---
----++++++++++++++++++---
----++++++++++++++++++---
----++++++++++++++++++---
+--c----------------c----
+------------------------
+---++++++++-+++++++++---
+---++++++++-+++++++++---
+---+++r++++-+++++r+++---
+---++++++++-+++++++++---
+---++++++++-+++++++++---
 ---++++++++++++++++++---
 ---++++++++++++++++++---
 ---+++++--------+++++---
@@ -96,14 +96,14 @@ module MouseyRevenge
 ---+++++--------+++++---
 ---++++++++++++++++++---
 ---++++++++++++++++++---
----++++++++++++++++++---
----++++++++++++++++++---
----++++++++++++++++++---
----++++++++++++++++++---
----++++++++++++++++++---
+---++++++++-+++++++++---
+---++++++++-+++++++++---
+---+++r++++-+++++r+++---
+---++++++++-+++++++++---
+---++++++++-+++++++++---
 ------------------------
-----------------c-------
---c---------------------
+------------------------
+--c----------------c----
 ------------------------
 END
   end

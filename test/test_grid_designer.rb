@@ -2,7 +2,7 @@ require 'helper'
 
 class TestGridDesigner < Test::Unit::TestCase
   setup do
-    @level_design = "-+-m-\nc++m"
+    @level_design = "-+rm-\nc++m"
     @grid = MouseyRevenge::Grid.new(width: 5, height: 5, square_size: 1)
     @designer = MouseyRevenge::GridDesigner.new(@grid)
   end
@@ -11,6 +11,7 @@ class TestGridDesigner < Test::Unit::TestCase
     @designer.write_to_grid(@level_design)
     assert_equal nil, @grid.get(x:0, y:0)
     assert_equal :block, @grid.get(x: 1, y: 0).name
+    assert_equal :rock, @grid.get(x: 2, y: 0).name
     assert_equal :mouse, @grid.get(x: 3, y: 0).name
   end
 
