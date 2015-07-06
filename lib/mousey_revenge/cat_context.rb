@@ -4,6 +4,10 @@ module MouseyRevenge
   class CatContext
     attr_reader :state
 
+    extend Forwardable
+
+    def_delegator :state, :name
+
     def initialize(grid:, position:)
       @state = Cat.new(grid: grid, position: position)
     end
