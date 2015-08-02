@@ -70,4 +70,16 @@ class TestLevelScene < Test::Unit::TestCase
     @level_scene.instance_variable_set(:@background, background)
     @level_scene.send(:draw_grid)
   end
+
+  should 'draw the score' do
+    score_drawer = mock
+    score_drawer.expects(:draw).with(score: 42)
+
+    mouse = mock
+    mouse.stubs(:score).returns(42)
+
+    @level_scene.stubs(:mouse).returns(mouse)
+    @level_scene.stubs(:score_drawer).returns(score_drawer)
+    @level_scene.send(:draw_score)
+  end
 end

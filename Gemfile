@@ -1,10 +1,11 @@
 source "http://rubygems.org"
-# Add dependencies required to use your gem here.
-# Example:
-#   gem "activesupport", ">= 2.3.5"
 
-# Add dependencies to develop your gem here.
-# Include everything needed to run rake, tests, features, etc.
+gem "wisper"
+gem "pqueue"
+gem "celluloid"
+gem "lawyer"
+gem "gosu"
+
 group :development do
   gem "shoulda", ">= 0"
   gem "shoulda-context"
@@ -13,13 +14,9 @@ group :development do
   gem "jeweler", "~> 2.0.1"
   gem "simplecov", ">= 0"
   gem "test-unit"
-  gem "gosu"
   gem "pry"
   gem "mocha"
   gem "guard"
   gem "guard-rake"
-  gem "wisper"
-  gem "pqueue"
-  gem "celluloid"
-  gem "lawyer"
+  gem "ruby-prof"
 end
