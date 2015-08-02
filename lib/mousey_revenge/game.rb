@@ -41,6 +41,7 @@ module MouseyRevenge
         mouse_location: mouse_position
       }
       broadcast(:update, params) if params != @last_params
+      broadcast(:tick)
       @last_params = params
     end
 
