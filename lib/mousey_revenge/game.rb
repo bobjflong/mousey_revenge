@@ -45,7 +45,6 @@ module MouseyRevenge
     end
 
     def draw
-      font.draw("Score: #{mouse_score || 0}", 0, 0, 1.0) if mouse_score
       scene_manager.draw
     end
 
@@ -55,10 +54,6 @@ module MouseyRevenge
       @scene_manager ||= SceneManager.new(game: self).tap do |manager|
         manager.transition_to(MouseyRevenge::LevelScene)
       end
-    end
-
-    def font
-      @font ||= Gosu::Font.new(self, Gosu::default_font_name, 18)
     end
   end
 end

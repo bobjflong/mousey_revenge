@@ -1,6 +1,8 @@
+require 'mousey_revenge/score_drawer'
+
 module MouseyRevenge
   class LevelScene
-    attr_reader :grid, :designer, :mouse
+    attr_reader :grid, :designer, :mouse, :game
 
     extend Forwardable
 
@@ -18,21 +20,18 @@ module MouseyRevenge
     def draw
       draw_grid
       draw_npcs
+      draw_score
     end
 
     def mouse_position
       mouse.position
     end
 
-    def mouse_score
-      mouse.score
-    end
-
     private
 
     def set_up_mouse(position)
       @mouse = MouseyRevenge::Mouse.new(
-        game: @game,
+        game: game,
         grid: @grid,
         position: position
       )
@@ -67,7 +66,7 @@ module MouseyRevenge
     end
 
     def set_up_cat_group
-      @cat_group = CatGroup.new(grid: @grid, positions: designer.cat_locations, game: @game)
+      @cat_group = CatGroup.new(grid: @grid, positions: designer.cat_locations, game: game)
       @cat_group.cats.each do |cat|
         @grid.overwrite(
           x: cat.position_x,
@@ -90,6 +89,14 @@ module MouseyRevenge
 
     def draw_npcs
       @cat_group.draw
+    end
+
+    def draw_score
+      score_drawer.draw(score: mouse.score)
+    end
+
+    def score_drawer
+      @score_drawer ||= ScoreDrawer.new(game)
     end
 
     def prefix

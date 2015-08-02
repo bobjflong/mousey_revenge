@@ -1,7 +1,6 @@
 module MouseyRevenge
   # Capable of producing an enumerator on a grid for a given direction
   module GridEnumerator
-
     class GridEnumValue
       attr_reader :x, :y, :value
 

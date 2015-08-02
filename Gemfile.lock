@@ -96,6 +96,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    ruby-prof (0.15.8)
     shellany (0.0.1)
     shoulda (3.5.0)
       shoulda-context (~> 1.0, >= 1.0.1)
@@ -134,6 +135,7 @@ DEPENDENCIES
   pqueue
   pry
   rdoc (~> 3.12)
+  ruby-prof
   shoulda
   shoulda-context
   simplecov

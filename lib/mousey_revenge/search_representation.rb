@@ -1,7 +1,7 @@
 module MouseyRevenge
   # A representation of a grid node, for searching
   # it contains a cost, based on a search heuristic
-  # and a parent for retracing successul paths
+  # and a parent for retracing successful paths
   class SearchRepresentation
     attr_reader :x, :y, :cost, :parent
 
