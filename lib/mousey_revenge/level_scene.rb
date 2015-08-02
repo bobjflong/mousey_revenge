@@ -19,7 +19,6 @@ module MouseyRevenge
 
     def draw
       draw_grid
-      draw_npcs
       draw_score
     end
 
@@ -85,10 +84,6 @@ module MouseyRevenge
     def write_level_to_grid
       @designer = GridDesigner.new(@grid)
       @designer.write_to_grid(GridDesigner::LEVEL_1)
-    end
-
-    def draw_npcs
-      @cat_group.draw
     end
 
     def draw_score

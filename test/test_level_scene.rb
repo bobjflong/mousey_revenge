@@ -41,13 +41,6 @@ class TestLevelScene < Test::Unit::TestCase
     assert_equal MouseyRevenge::Mouse, @level_scene.instance_variable_get(:@mouse).class
   end
 
-  should 'send :draw to the cat_group when drawing npcs' do
-    cat_group = mock
-    cat_group.expects(:draw)
-    @level_scene.instance_variable_set(:@cat_group, cat_group)
-    @level_scene.send(:draw_npcs)
-  end
-
   should 'draw the grid' do
     block = mock
     block.expects(:draw)

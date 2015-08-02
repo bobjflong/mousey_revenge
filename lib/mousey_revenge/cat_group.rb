@@ -18,10 +18,7 @@ module MouseyRevenge
       game.subscribe(self)
     end
 
-    # TODO: bobjflong
-    # this is an inaccurate method name, can we move this logic to #update?
-    # the game-loop should perhaps broadcast on everyframe
-    def draw
+    def tick
       hunt_for_target(@last_mouse_location)
       check_current_futures
       turn_cats_into_cheese_if_all_trapped
