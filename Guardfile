@@ -26,3 +26,5 @@ clearing :on
 guard 'rake', task: 'test' do
   watch(/.*\.rb/)
 end
+
+notification(:file, path: '.guard_result')

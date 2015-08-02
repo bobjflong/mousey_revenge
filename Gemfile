@@ -18,5 +18,6 @@ group :development do
   gem "mocha"
   gem "guard"
   gem "guard-rake"
+  gem "guard-shell"
   gem "ruby-prof"
 end
