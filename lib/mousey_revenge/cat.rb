@@ -27,10 +27,11 @@ module MouseyRevenge
 
     def calculate_move(target_position:, context: nil)
       @result = nil
-      result = find_cached_path(target_position: target_position)
-      return result if result
+      find_cached_path(target_position: target_position)
+      return current_actor if @result
       return switch_to_trapped_context(context: context) if no_free_moves?
       find_new_path(target_position: target_position)
+      current_actor
     end
 
     def calculate_move_and_sleep(target_position:, context:)
@@ -95,15 +96,12 @@ module MouseyRevenge
         target_position: target_position
       )
       @previous_target = target_position.clone
-      current_actor
     end
 
     def find_cached_path(target_position:)
       @result = path_finder.find_cached_path(
         target_position: target_position
       )
-      return nil unless @result
-      current_actor
     end
 
     def random_valid_move
