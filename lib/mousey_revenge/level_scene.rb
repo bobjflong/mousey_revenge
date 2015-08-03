@@ -46,12 +46,7 @@ module MouseyRevenge
         GRID_HEIGHT.times do |y|
           next if @grid.out_of_bounds?(x: x, y: y)
           cell = @grid.get(x: x, y: y)
-          # TODO: nope! this should not be here duplicated
-          if cell.respond_to?(:draw)
-            cell.draw(x * CELL_SIZE, y * CELL_SIZE, 0)
-          else
-            @background.draw(x * CELL_SIZE, y * CELL_SIZE, 0)
-          end
+          (cell || @background).draw(x * CELL_SIZE, y * CELL_SIZE, 0)
         end
       end
     end
