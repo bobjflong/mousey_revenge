@@ -17,7 +17,6 @@ module MouseyRevenge
     def initialize(grid:, position:)
       @grid = grid
       @position = position
-      @cache = {}
       calculate_uuid
     end
 

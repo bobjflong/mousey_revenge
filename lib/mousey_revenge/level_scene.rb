@@ -14,7 +14,7 @@ module MouseyRevenge
       set_up_base_sprites
       write_level_to_grid
       set_up_cat_group
-      set_up_mouse(mouse_location)
+      set_up_mouse
     end
 
     def draw
@@ -28,17 +28,28 @@ module MouseyRevenge
 
     private
 
-    def set_up_mouse(position)
+    def set_up_mouse
       @mouse = MouseyRevenge::Mouse.new(
         game: game,
         grid: @grid,
-        position: position
+        position: mouse_location
       )
       grid.overwrite(
-        x: position.fetch(:x),
-        y: position.fetch(:y),
+        x: mouse_location.fetch(:x),
+        y: mouse_location.fetch(:y),
         value: @mouse
       )
+    end
+
+    def set_up_cat_group
+      @cat_group = CatGroup.new(grid: @grid, positions: designer.cat_locations, game: game)
+      @cat_group.cats.each do |cat|
+        @grid.overwrite(
+          x: cat.position_x,
+          y: cat.position_y,
+          value: cat
+        )
+      end
     end
 
     def draw_grid
@@ -53,17 +64,6 @@ module MouseyRevenge
 
     def draw_score
       score_drawer.draw(score: mouse.score)
-    end
-
-    def set_up_cat_group
-      @cat_group = CatGroup.new(grid: @grid, positions: designer.cat_locations, game: game)
-      @cat_group.cats.each do |cat|
-        @grid.overwrite(
-          x: cat.position_x,
-          y: cat.position_y,
-          value: cat
-        )
-      end
     end
 
     def set_up_base_sprites
