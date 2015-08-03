@@ -1,4 +1,5 @@
 require 'helper'
+require 'mousey_revenge/grid_designer'
 
 class TestLevelScene < Test::Unit::TestCase
   setup do
@@ -9,15 +10,13 @@ class TestLevelScene < Test::Unit::TestCase
     test_image_class.stubs(:new).returns(:sprite)
 
     MouseyRevenge::LevelScene.any_instance.stubs(:image_class).returns(test_image_class)
+    RockRepresentation.any_instance.stubs(:image_class).returns(test_image_class)
+    BlockRepresentation.any_instance.stubs(:image_class).returns(test_image_class)
     @level_scene = MouseyRevenge::LevelScene.new(game: game)
   end
 
   should 'create a grid' do
     assert_equal MouseyRevenge::Grid, @level_scene.grid.class
-  end
-
-  should 'create a block sprite' do
-    assert_equal :sprite, @level_scene.instance_variable_get(:@block)
   end
 
   should 'create a background sprite' do
@@ -42,11 +41,8 @@ class TestLevelScene < Test::Unit::TestCase
   end
 
   should 'draw the grid' do
-    block = mock
-    block.expects(:draw)
-
     background = mock
-    background.expects(:draw)
+    background.expects(:draw).twice
 
     mouse = mock
     mouse.stubs(:name).returns(:mouse)
@@ -57,9 +53,8 @@ class TestLevelScene < Test::Unit::TestCase
     cat.expects(:draw)
 
     grid = MouseyRevenge::Grid.new(width: 2, height: 2, square_size: 1)
-    grid.instance_variable_set(:@grid_data, [[nil, OpenStruct.new(name: :block)], [cat, mouse]])
+    grid.instance_variable_set(:@grid_data, [[nil, nil], [cat, mouse]])
     @level_scene.instance_variable_set(:@grid, grid)
-    @level_scene.instance_variable_set(:@block, block)
     @level_scene.instance_variable_set(:@background, background)
     @level_scene.send(:draw_grid)
   end

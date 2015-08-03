@@ -19,4 +19,9 @@ class TestGridDesigner < Test::Unit::TestCase
     @designer.write_to_grid(@level_design)
     assert_equal [{ x: 0, y: 1 }], @designer.cat_locations
   end
+
+  should 'create some base sprite classes' do
+    assert_equal '/../../assets/rock.png', RockRepresentation.class_variable_get(:@@sprite_path)
+    assert_equal '/../../assets/tile.png', BlockRepresentation.class_variable_get(:@@sprite_path)
+  end
 end

@@ -41,27 +41,23 @@ module MouseyRevenge
       )
     end
 
-    def image_class
-      Gosu::Image
-    end
-
     def draw_grid
       GRID_WIDTH.times do |x|
         GRID_HEIGHT.times do |y|
           next if @grid.out_of_bounds?(x: x, y: y)
           cell = @grid.get(x: x, y: y)
           # TODO: nope! this should not be here duplicated
-          if cell && cell.name == :block
-            @block.draw(x * CELL_SIZE, y * CELL_SIZE, 0)
-          elsif cell && cell.name == :rock
-            @rock.draw(x * CELL_SIZE, y * CELL_SIZE, 0)
-          elsif cell.respond_to?(:draw)
-            cell.draw
+          if cell.respond_to?(:draw)
+            cell.draw(x * CELL_SIZE, y * CELL_SIZE, 0)
           else
             @background.draw(x * CELL_SIZE, y * CELL_SIZE, 0)
           end
         end
       end
+    end
+
+    def draw_score
+      score_drawer.draw(score: mouse.score)
     end
 
     def set_up_cat_group
@@ -76,18 +72,17 @@ module MouseyRevenge
     end
 
     def set_up_base_sprites
-      @block = image_class.new(prefix + '/../../assets/tile.png', tileable: true)
-      @rock = image_class.new(prefix + '/../../assets/rock.png', tileable: true)
       @background = image_class.new(prefix + '/../../assets/background.png', tileable: true)
     end
+
+    def image_class
+      Gosu::Image
+    end
+
 
     def write_level_to_grid
       @designer = GridDesigner.new(@grid)
       @designer.write_to_grid(GridDesigner::LEVEL_1)
-    end
-
-    def draw_score
-      score_drawer.draw(score: mouse.score)
     end
 
     def score_drawer

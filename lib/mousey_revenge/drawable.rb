@@ -1,6 +1,6 @@
 module MouseyRevenge
   module Drawable
-    def draw
+    def draw(*)
       sprite.draw(position_x * CELL_SIZE, position_y * CELL_SIZE, 0)
     end
 
