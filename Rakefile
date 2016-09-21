@@ -31,6 +31,13 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
+task :play do
+  ENV['PLAY'] = '1'
+  $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '.', 'lib'))
+  $LOAD_PATH.unshift(File.dirname(__FILE__))
+  require 'mousey_revenge'
+end
+
 desc "Code coverage detail"
 task :simplecov do
   ENV['COVERAGE'] = "true"
