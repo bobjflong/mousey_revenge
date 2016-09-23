@@ -69,6 +69,28 @@ class TestCatGroup < Test::Unit::TestCase
     assert_equal 0, group.pending_cats.size
   end
 
+  should 'check futures for results when cats are trapped' do
+    result = mock
+    result.stubs(:uuid).returns('1234')
+    result.stubs(:attack_mouse_if_possible)
+    result.stubs(:symbolic_result).returns(:up)
+    result.stubs(:take_move).with(:up)
+    result.stubs(:immobile?).returns(true)
+
+    future = mock
+    future.stubs(:ready?).returns(true)
+    future.stubs(:value).returns result
+    futures = [future]
+
+    group = MouseyRevenge::CatGroup.new(game: @game, grid: @grid, positions: basic_positions)
+    group.instance_variable_set(:@futures_currently_calculating, futures)
+    group.instance_variable_set(:@pending_cats, ['1234'])
+
+    group.check_current_futures
+    assert_equal 0, group.futures_currently_calculating.size
+    assert_equal 0, group.pending_cats.size
+  end
+
   should 'subscribe to game events' do
     game = mock
     game.expects(:subscribe)

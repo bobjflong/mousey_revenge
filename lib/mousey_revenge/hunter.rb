@@ -18,7 +18,7 @@ module MouseyRevenge
       mouse_in_neighbourhood(neighbours)
     end
 
-    def mouse_in_neighbourhood(neighbours)
+    private def mouse_in_neighbourhood(neighbours)
       neighbours.find do |neighbour|
         neighbour.contents.is_a?(MouseyRevenge::Mouse)
       end
