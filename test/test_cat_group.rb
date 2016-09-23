@@ -53,6 +53,7 @@ class TestCatGroup < Test::Unit::TestCase
     result.stubs(:attack_mouse_if_possible)
     result.stubs(:symbolic_result).returns(:up)
     result.stubs(:take_move).with(:up)
+    result.stubs(:immobile?).returns(false)
 
     future = mock
     future.stubs(:ready?).returns(true)

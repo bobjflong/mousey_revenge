@@ -69,6 +69,18 @@ class TestCat < Test::Unit::TestCase
     assert_equal MouseyRevenge::TrappedCat, @context.state.class
   end
 
+  should 'set the context state to Cat when untrapped' do
+    @level_design = "c-\n+-"
+    @grid = MouseyRevenge::Grid.new(width: 2, height: 2, square_size: 1)
+    @designer = MouseyRevenge::GridDesigner.new(@grid)
+    @designer.write_to_grid(@level_design)
+    @context = MouseyRevenge::CatContext.new(grid: @grid, position: { x: 0, y: 0 })
+    trapped_cat = MouseyRevenge::TrappedCat.new(grid: @grid, position: {x: 0, y: 0}, uuid: 'foo')
+    @context.update_state(trapped_cat)
+    @context.calculate_move(target_position: { x: 1, y: 0 })
+    assert_equal MouseyRevenge::Cat, @context.state.class
+  end
+
   should "attack mice that are in range" do
     @level_design = "cm\n+-"
     @grid = MouseyRevenge::Grid.new(width: 2, height: 2, square_size: 1)

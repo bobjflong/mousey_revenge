@@ -32,7 +32,6 @@ module MouseyRevenge
     def hunt_for_target(target)
       cats.each do |cat|
         next if pending_result?(cat)
-        next if cat.immobile?
         futures_currently_calculating <<
           cat.future_calculate_move(target_position: target)
         pending_cats << cat.uuid
@@ -60,6 +59,7 @@ module MouseyRevenge
     attr_reader :game
 
     def attack_mouse_with_cat(cat)
+      return if cat.immobile? # todo: spec
       result = cat.attack_mouse_if_possible
       game.transition_to(KillScreen) if result
       result
