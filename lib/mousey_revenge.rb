@@ -1,5 +1,5 @@
 module MouseyRevenge
-  DIRECTIONS = %i(left right up down)
+  DIRECTIONS = %i(left right up down).freeze
 
   GRID_WIDTH = 25
   GRID_HEIGHT = GRID_WIDTH

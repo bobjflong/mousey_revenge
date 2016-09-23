@@ -18,7 +18,11 @@ module MouseyRevenge
 
     def method_missing(msg, *args)
       return scene.send(msg, *args) if scene.respond_to?(msg)
-      fail UnknownSceneMessage, msg
+      super
+    end
+
+    def respond_to_missing?(msg, _)
+      scene.respond_to?(msg)
     end
 
     private

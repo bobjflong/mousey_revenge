@@ -36,7 +36,11 @@ module MouseyRevenge
 
     def method_missing(m, *args)
       return state.send(m, *args) if state.respond_to?(m)
-      fail NoMethodError
+      super
+    end
+
+    def respond_to_missing?(m, _)
+      state.respond_to?(m)
     end
   end
 end

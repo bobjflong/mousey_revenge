@@ -5,7 +5,7 @@ require 'mousey_revenge/hunter'
 module MouseyRevenge
   class Cat
     NAME = :cat
-    SPRITE_PATH = '/../../assets/cat.png'
+    SPRITE_PATH = '/../../assets/cat.png'.freeze
 
     include Celluloid
     include Drawable

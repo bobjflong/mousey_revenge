@@ -20,4 +20,5 @@ group :development do
   gem "guard-rake"
   gem "guard-shell"
   gem "ruby-prof"
+  gem "rubocop"
 end

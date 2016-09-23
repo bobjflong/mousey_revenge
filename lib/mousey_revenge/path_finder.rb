@@ -36,10 +36,10 @@ module MouseyRevenge
 
     def searcher(source_position)
       GridSearcher.new(grid: grid)
-        .start_at(
-          x: source_position.fetch(:x),
-          y: source_position.fetch(:y)
-        )
+                  .start_at(
+                    x: source_position.fetch(:x),
+                    y: source_position.fetch(:y)
+                  )
     end
   end
 end

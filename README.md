@@ -1,6 +1,6 @@
 # mousey_revenge
 
-[ ![Codeship Status for bobjflong/mousey_revenge](https://codeship.com/projects/aca1c880-f04d-0132-df32-4aa3675e9bc5/status?branch=master)](https://codeship.com/projects/84595) [![Code Climate](https://codeclimate.com/github/bobjflong/mousey_revenge/badges/gpa.svg)](https://codeclimate.com/github/bobjflong/mousey_revenge)
+[ ![Codeship Status for bobjflong/mousey_revenge](https://codeship.com/projects/d7ff90d0-63c4-0134-b639-0e2bb2d0cfc6/status?branch=master)](https://codeship.com/projects/175438) [![Code Climate](https://codeclimate.com/github/bobjflong/mousey_revenge/badges/gpa.svg)](https://codeclimate.com/github/bobjflong/mousey_revenge)
 
 WIP clone of a classic windows game
 

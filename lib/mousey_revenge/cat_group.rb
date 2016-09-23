@@ -59,7 +59,7 @@ module MouseyRevenge
     attr_reader :game
 
     def attack_mouse_with_cat(cat)
-      return if cat.immobile? # todo: spec
+      return if cat.immobile?
       result = cat.attack_mouse_if_possible
       game.transition_to(KillScreen) if result
       result

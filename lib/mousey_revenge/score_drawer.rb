@@ -13,7 +13,7 @@ module MouseyRevenge
     private
 
     def font
-      @font ||= Gosu::Font.new(game, Gosu::default_font_name, 18)
+      @font ||= Gosu::Font.new(game, Gosu.default_font_name, 18)
     end
   end
 end
