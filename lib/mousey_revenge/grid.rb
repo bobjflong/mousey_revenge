@@ -47,7 +47,7 @@ module MouseyRevenge
     private
 
     def raise_occupied_error
-      fail MouseyRevenge::OccupiedError
+      fail MouseyRevenge::OccupiedError # TODO: used for control flow
     end
 
     def grid_data

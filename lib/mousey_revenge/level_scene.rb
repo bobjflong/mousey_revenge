@@ -10,7 +10,7 @@ module MouseyRevenge
 
     def initialize(game:)
       @game = game
-      @grid = Grid.new(width: GRID_WIDTH, height: GRID_HEIGHT, square_size: 10)
+      @grid = Grid.new(width: Constants::GRID_WIDTH, height: Constants::GRID_HEIGHT, square_size: 10)
       set_up_base_sprites
       write_level_to_grid
       set_up_cat_group
@@ -53,11 +53,11 @@ module MouseyRevenge
     end
 
     def draw_grid
-      GRID_WIDTH.times do |x|
-        GRID_HEIGHT.times do |y|
+      Constants::GRID_WIDTH.times do |x|
+        Constants::GRID_HEIGHT.times do |y|
           next if @grid.out_of_bounds?(x: x, y: y)
           cell = @grid.get(x: x, y: y)
-          (cell || @background).draw(x * CELL_SIZE, y * CELL_SIZE, 0)
+          (cell || @background).draw(x * Constants::CELL_SIZE, y * Constants::CELL_SIZE, 0)
         end
       end
     end

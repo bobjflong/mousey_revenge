@@ -13,7 +13,7 @@ module MouseyRevenge
 
     # Generates enumerate_right_from ; enumerate_left_from
     # enumerate_up_from ; enumerate_down_from
-    DIRECTIONS.each do |direction|
+    Constants::DIRECTIONS.each do |direction|
       define_method "enumerate_#{direction}_from" do |args|
         x = args.fetch(:x)
         y = args.fetch(:y)

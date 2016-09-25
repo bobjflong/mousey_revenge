@@ -11,7 +11,7 @@ module MouseyRevenge
 
     # Generates
     # shift_left ; shift_right ; shift_up ; shift_down
-    DIRECTIONS.each do |direction|
+    Constants::DIRECTIONS.each do |direction|
       define_method "shift_#{direction}" do |args|
         x_old = args.fetch(:x)
         y_old = args.fetch(:y)

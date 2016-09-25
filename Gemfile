@@ -21,4 +21,5 @@ group :development do
   gem "guard-shell"
   gem "ruby-prof"
   gem "rubocop"
+  gem "flog"
 end

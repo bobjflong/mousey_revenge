@@ -17,7 +17,7 @@ module MouseyRevenge
   class Neighbourhood
     class << self
       def for(x:, y:, grid:, options: default_neighbourhood_options)
-        results = DIRECTIONS.map do |direction|
+        results = Constants::DIRECTIONS.map do |direction|
           new_x = x + Math.x_off(direction)
           new_y = y + Math.y_off(direction)
           NeighbourhoodPoint.new(

@@ -9,7 +9,7 @@ module MouseyRevenge
 
     # Generates can_slide_right? ; can_slide_left?
     # can_slide_up? ; can_slide_down?
-    DIRECTIONS.each do |direction|
+    Constants::DIRECTIONS.each do |direction|
       define_method "can_slide_#{direction}?" do |args|
         x = args.fetch(:x)
         y = args.fetch(:y)
@@ -25,7 +25,7 @@ module MouseyRevenge
 
     # Generates slide_right! ; slide_left!
     # slide_down! ; slide_up!
-    DIRECTIONS.each do |direction|
+    Constants::DIRECTIONS.each do |direction|
       define_method "slide_#{direction}!" do |args|
         msg = "enumerate_#{direction}_from"
         storage = nil
