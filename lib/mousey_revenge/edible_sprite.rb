@@ -1,3 +1,4 @@
+
 module MouseyRevenge
   module EdibleSprite
     SPRITE_PATH_ALT = '/../../assets/cheese.png'

@@ -6,7 +6,7 @@ module MouseyRevenge
 
     def sprite
       sprite_path = if respond_to?(:sprite_path)
-                      prefix + sprite_path
+                      prefix + self.send(:sprite_path)
                     else
                       prefix + self.class.const_get(:SPRITE_PATH)
                     end

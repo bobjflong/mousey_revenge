@@ -20,6 +20,7 @@ module MouseyRevenge
     include Wisper::Publisher
 
     extend Forwardable
+    include MouseyRevenge::Constants
 
     def_delegator :scene_manager, :mouse_score
     def_delegator :scene_manager, :mouse_position
